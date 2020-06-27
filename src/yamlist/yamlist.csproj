@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<AssemblyName>yi</AssemblyName>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<RootNamespace>yamlist</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>yi</ToolCommandName>
+		<PackageOutputPath>../../build</PackageOutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>0.0.1</Version>
+		<Authors>RealOrko</Authors>
+		<Description>A tool that provides macro cli functions for working with yaml used in concourse pipelines :)</Description>
+		<PackageId>dotnet-cli-yamlist</PackageId>
+		<Title>dotnet cli yaml concourse tool</Title>
+		<PackageTags>dotnet,cli,yaml,concourse</PackageTags>
+		<Product>dotnet cli yaml concourse tool</Product>
+		<BuildVersion>$(Version)</BuildVersion>
+		<BuildVersionMajor>$(BuildVersion.Split('.')[0])</BuildVersionMajor>
+		<BuildVersionNoSuffix>$(BuildVersion.Split('-')[0])</BuildVersionNoSuffix>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<FileVersion>$(BuildVersionNoSuffix)</FileVersion>
+		<VersionPrefix>$(BuildVersion)</VersionPrefix>
+		<AssemblyVersion>$(BuildVersionMajor).0.0</AssemblyVersion>
+		<PackageLicense>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicense>
+		<PackageProjectUrl>https://github.com/RealOrko/dotnet-cli-yamlist</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageVersion>$(BuildVersion)</PackageVersion>
+		<IncludeSymbols>true</IncludeSymbols>
+		<IncludeSource>false</IncludeSource>
+		<CurrentYear>$([System.DateTime]::Now.ToString("yyyy"))</CurrentYear>
+		<Copyright>Copyright 2020-$(CurrentYear) RealOrko </Copyright>
+		<ContentTargetFolders>.</ContentTargetFolders>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SharpCompress" Version="0.25.0" />
+		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+		<PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Modules\Commands" />
+	</ItemGroup>
+
+</Project>
