@@ -6,11 +6,11 @@ using yamlist.Modules.Versioning;
 
 namespace yamlist
 {
-    class Program
+    internal class Program
     {
-        private static CommandRouter _router = new CommandRouter();
-        
-        static int Main(string[] args)
+        private static readonly CommandRouter _router = new CommandRouter();
+
+        private static int Main(string[] args)
         {
             if (args.Length == 0 || args[0] == "--help" || args[0] == "/?" || args[0] == "?")
             {
@@ -30,7 +30,6 @@ namespace yamlist
                 }
 
                 result = dispatcher.Execute();
-
             }
             catch (Exception err)
             {
@@ -42,7 +41,7 @@ namespace yamlist
                     Console.WriteLine("Exiting with code -1");
                     result = -1;
                 }
-                
+
                 Console.WriteLine("\r\n");
             }
 
@@ -50,7 +49,7 @@ namespace yamlist
         }
 
 
-        static void PrintUsage()
+        private static void PrintUsage()
         {
             Console.WriteLine($"yi v{Info.GetVersion()} by realorko \r\n");
             CommandParser.InfoAll();

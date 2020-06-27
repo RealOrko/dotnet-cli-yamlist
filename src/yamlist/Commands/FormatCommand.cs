@@ -16,8 +16,7 @@ namespace yamlist.Commands
 
         public int Execute(FormatArguments args)
         {
-            Console.WriteLine("To install DOTNET Core, please see: https://dotnet.microsoft.com/download");
-            return 0;
+            throw new NotImplementedException();
         }
     }
 }

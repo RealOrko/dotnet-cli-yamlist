@@ -7,7 +7,7 @@ namespace yamlist.Modules.Commands.Routing
         public CommandContext(string[] args)
         {
             Command = args[0];
-            Arguments = args.Skip(1).Take(args.Length-1).ToArray();
+            Arguments = args.Skip(1).Take(args.Length - 1).ToArray();
         }
 
         public string Command { get; set; }

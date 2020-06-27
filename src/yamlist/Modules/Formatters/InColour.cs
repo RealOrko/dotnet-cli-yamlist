@@ -21,4 +21,5 @@ namespace yamlist.Modules.Formatters
             Console.BackgroundColor = _preBackground;
             Console.ForegroundColor = _preForeground;
         }
-    }}
+    }
+}

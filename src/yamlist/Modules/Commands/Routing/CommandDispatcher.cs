@@ -17,7 +17,8 @@ namespace yamlist.Modules.Commands.Routing
             Parameters = parameters;
         }
 
-        public CommandDispatcher(CommandContext context, object instance, object[] parameters) : this(instance, parameters)
+        public CommandDispatcher(CommandContext context, object instance, object[] parameters) : this(instance,
+            parameters)
         {
             Context = context;
         }
@@ -32,10 +33,7 @@ namespace yamlist.Modules.Commands.Routing
         {
             try
             {
-                if (Parameters == null)
-                {
-                    throw new Exception("Please supply parameters.");
-                }
+                if (Parameters == null) throw new Exception("Please supply parameters.");
 
                 var returnCode = (int?) ExecuteMethodInfo.Invoke(Instance, Parameters);
                 return returnCode.GetValueOrDefault(Environment.ExitCode);

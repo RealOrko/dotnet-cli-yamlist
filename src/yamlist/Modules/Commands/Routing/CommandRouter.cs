@@ -1,5 +1,4 @@
-﻿using System;
-using yamlist.Modules.Commands.Options;
+﻿using yamlist.Modules.Commands.Options;
 
 namespace yamlist.Modules.Commands.Routing
 {
@@ -20,10 +19,7 @@ namespace yamlist.Modules.Commands.Routing
         public CommandDispatcher Route(CommandContext argsContext)
         {
             var commandType = CommandParser.FindCommand(argsContext.Command);
-            if (commandType != default(Type))
-            {
-                return commandFactory.CreateDispatcher(argsContext, commandType);
-            }
+            if (commandType != default) return commandFactory.CreateDispatcher(argsContext, commandType);
 
             return null;
         }

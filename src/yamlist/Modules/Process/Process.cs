@@ -7,9 +7,9 @@ namespace yamlist.Modules.Process
 {
     public class Process
     {
-        private string _workingDirectory = null;
+        private readonly Dictionary<string, string> _environmentVariables = new Dictionary<string, string>();
         private TimeSpan _waitForExit = TimeSpan.FromMinutes(5);
-        private Dictionary<string, string> _environmentVariables = new Dictionary<string, string>();
+        private string _workingDirectory;
 
         public Process()
         {
@@ -53,15 +53,10 @@ namespace yamlist.Modules.Process
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
 
-            if (!string.IsNullOrEmpty(_workingDirectory))
-            {
-                startInfo.WorkingDirectory = _workingDirectory;
-            }
+            if (!string.IsNullOrEmpty(_workingDirectory)) startInfo.WorkingDirectory = _workingDirectory;
 
             foreach (var environmentVariable in _environmentVariables)
-            {
                 startInfo.EnvironmentVariables[environmentVariable.Key] = environmentVariable.Value;
-            }
 
             int exitCode;
             using (var process = new System.Diagnostics.Process())
@@ -72,26 +67,16 @@ namespace yamlist.Modules.Process
                 {
                     process.Start();
 
-                    while (!process.StandardOutput.EndOfStream)
-                    {
-                        stdout.AppendLine(process.StandardOutput.ReadLine());
-                    }
-                    
-                    while (!process.StandardError.EndOfStream)
-                    {
-                        stderr.AppendLine(process.StandardError.ReadLine());
-                    }
+                    while (!process.StandardOutput.EndOfStream) stdout.AppendLine(process.StandardOutput.ReadLine());
 
+                    while (!process.StandardError.EndOfStream) stderr.AppendLine(process.StandardError.ReadLine());
                 }
                 finally
                 {
                     var wasError = false;
                     try
                     {
-                        if (!process.WaitForExit((int) _waitForExit.TotalMilliseconds))
-                        {
-                            process.Kill();
-                        }
+                        if (!process.WaitForExit((int) _waitForExit.TotalMilliseconds)) process.Kill();
                     }
                     catch (InvalidOperationException err)
                     {
@@ -99,20 +84,16 @@ namespace yamlist.Modules.Process
                     }
 
                     if (!wasError)
-                    {
                         exitCode = process.ExitCode;
-                    }
                     else
-                    {
                         exitCode = -1;
-                    }
                 }
             }
 
             return new ProcessResult
             {
-                ErrorOutput = stderr.ToString(), 
-                ExitCode = exitCode, 
+                ErrorOutput = stderr.ToString(),
+                ExitCode = exitCode,
                 StandardOutput = stdout.ToString()
             };
         }
