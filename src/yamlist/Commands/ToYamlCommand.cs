@@ -23,6 +23,13 @@ namespace yamlist.Commands
         {
             var input = Input ?? File.ReadAllText(args.InputFile);
             var output = YamlConverter.ToYaml(input);
+
+            if (args.Debug)
+            {
+                var debugFile = Path.GetFileName(args.InputFile) + ".debug";
+                File.WriteAllText(debugFile, output);
+            }
+            
             var json = YamlReverseTransformer.Transform(output);
             (Out ?? Console.Out).WriteLine(json);
             return 0;
