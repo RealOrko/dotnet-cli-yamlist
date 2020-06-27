@@ -9,4 +9,4 @@ pushd ./build
 ./yi json -f d.yml > j.json
 ./yi yaml -f j.json > y.yml
 meld d.yml y.yml
-popd ./build
+popd
