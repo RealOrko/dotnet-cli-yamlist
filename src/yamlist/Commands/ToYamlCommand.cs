@@ -20,8 +20,9 @@ namespace yamlist.Commands
         public int Execute(ToYamlArguments args)
         {
             var input = File.ReadAllText(args.InputFile);
-            var output = YamlTransformer.ReverseTransform(input);
-            Console.WriteLine(output);
+            var output = YamlConverter.ToYaml(input);
+            var json = YamlReverseTransformer.Transform(output);
+            Console.WriteLine(json);
             return 0;
         }
     }
