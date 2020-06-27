@@ -1,4 +1,4 @@
-# dotnet-cli-ghinstaller
+# dotnet-cli-yamlist
 
 ## TODO
 
