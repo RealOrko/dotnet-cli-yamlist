@@ -7,7 +7,7 @@ To do.
 ### Synopsis
 
 ```
-ghi todo
+yi todo
 --------
 
    -todo, -t or TODO env var

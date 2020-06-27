@@ -27,7 +27,7 @@ namespace yamlist.Modules.Commands.Options
                 if (commandAttribute != null)
                 {
                     builder.AppendLine();
-                    var fullCommand = $"ghi {commandAttribute.Command}";
+                    var fullCommand = $"yi {commandAttribute.Command}";
                     builder.AppendLine(fullCommand);
                     builder.AppendLine(new string('-', fullCommand.Length));
                 }

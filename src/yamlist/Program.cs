@@ -52,7 +52,7 @@ namespace yamlist
 
         static void PrintUsage()
         {
-            Console.WriteLine($"ghi v{Info.GetVersion()} by realorko \r\n");
+            Console.WriteLine($"yi v{Info.GetVersion()} by realorko \r\n");
             CommandParser.InfoAll();
         }
     }
