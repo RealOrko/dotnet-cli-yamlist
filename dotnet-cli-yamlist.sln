@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{AB01F558
 		.github\workflows\build.yml = .github\workflows\build.yml
 		build.sh = build.sh
 		test.sh = test.sh
+		visualise.sh = visualise.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docs", "docs\docs.csproj", "{CD3B9FCE-0ABA-4DAB-8D9E-21157354954A}"

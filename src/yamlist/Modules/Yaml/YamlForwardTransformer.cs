@@ -59,11 +59,11 @@ namespace yamlist.Modules.Yaml
 
         private static void ForwardAnchorUsageReplacement(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, @"(?=.*[\ \t])(\s*\*)");
+            var match = Regex.Match(currentLine, @"(?=[\ \t])(\s*\*)");
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(?=.*[\ \t])(\s*\*)", $" ___anchor_call_{counter}___");
+                currentLine = Regex.Replace(currentLine, @"(?=[\ \t])(\s*\*)", $" ___anchor_call_{counter}___");
             }
         }
     }

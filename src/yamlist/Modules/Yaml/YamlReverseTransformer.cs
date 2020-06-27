@@ -29,7 +29,8 @@ namespace yamlist.Modules.Yaml
             ReverseAnchorReplacement(ref currentLine);
             ReverseMergeIntoReplacement(ref currentLine);
             ReverseAnchorUsageReplacement(ref currentLine);
-            Reverse_v_1_1_yaml_multiline_block(ref currentLine);
+            Reverse_v_1_1_yaml_multiline_block_1(ref currentLine);
+            Reverse_v_1_1_yaml_multiline_block_2(ref currentLine);
         }
 
         private static void ReverseAnchorReplacement(ref string currentLine)
@@ -62,7 +63,7 @@ namespace yamlist.Modules.Yaml
             }
         }
         
-        private static void Reverse_v_1_1_yaml_multiline_block(ref string currentLine)
+        private static void Reverse_v_1_1_yaml_multiline_block_1(ref string currentLine)
         {
             var match = Regex.Match(currentLine, @"(:\s>)");
             if (match.Success)
@@ -71,5 +72,16 @@ namespace yamlist.Modules.Yaml
                 currentLine = Regex.Replace(currentLine, @"(:\s>)", ": |");
             }
         }
+        
+        private static void Reverse_v_1_1_yaml_multiline_block_2(ref string currentLine)
+        {
+            var match = Regex.Match(currentLine, @"(-\s>)");
+            if (match.Success)
+            {
+                currentLine = currentLine.TrimEnd();
+                currentLine = Regex.Replace(currentLine, @"(-\s>)", "- |");
+            }
+        }
+
     }
 }
