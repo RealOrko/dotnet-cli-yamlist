@@ -15,14 +15,16 @@ namespace yamlist.Commands
             Context = context;
         }
 
+        public string Input { get; set; }
+        public StringWriter Out { get; set; }
         public CommandContext Context { get; }
 
         public int Execute(ToYamlArguments args)
         {
-            var input = File.ReadAllText(args.InputFile);
+            var input = Input ?? File.ReadAllText(args.InputFile);
             var output = YamlConverter.ToYaml(input);
             var json = YamlReverseTransformer.Transform(output);
-            Console.WriteLine(json);
+            (Out ?? Console.Out).WriteLine(json);
             return 0;
         }
     }
