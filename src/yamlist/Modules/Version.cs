@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace yamlist.Modules.Version
+namespace yamlist.Modules
 {
-    public class Info
+    public class Version
     {
         public static string GetVersion()
         {

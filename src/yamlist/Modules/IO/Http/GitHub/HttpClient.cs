@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using yamlist.Modules.IO.Http.GitHub.Model;
 using yamlist.Modules.IO.Http.GitHub.Model.Interfaces;
-using yamlist.Modules.Version;
 
 namespace yamlist.Modules.IO.Http.GitHub
 {
@@ -87,7 +86,7 @@ namespace yamlist.Modules.IO.Http.GitHub
             var httpClient = new System.Net.Http.HttpClient(httpHandler);
             httpClient.BaseAddress = new Uri("https://api.github.com");
             httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("ghinstaller",
-                Info.GetVersion()));
+                Version.GetVersion()));
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));

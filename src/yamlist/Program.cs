@@ -3,7 +3,7 @@ using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Parsers;
 using yamlist.Modules.IO;
 using yamlist.Modules.IO.Console;
-using yamlist.Modules.Version;
+using Version = yamlist.Modules.Version;
 
 namespace yamlist
 {
@@ -52,7 +52,7 @@ namespace yamlist
 
         private static void PrintUsage()
         {
-            Console.WriteLine($"yi v{Info.GetVersion()} by realorko \r\n");
+            Console.WriteLine($"yi v{Version.GetVersion()} by realorko \r\n");
             CommandParser.InfoAll();
         }
     }
