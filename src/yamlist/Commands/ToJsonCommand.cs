@@ -23,7 +23,7 @@ namespace yamlist.Commands
         public int Execute(ToJsonArguments args)
         {
             var input = Input ?? File.ReadAllText(args.InputFile);
-            var output = YamlForwardTransformer.Transform(input);
+            var output = ForwardConverter.Transform(input);
 
             if (args.Debug)
             {
@@ -31,7 +31,7 @@ namespace yamlist.Commands
                 File.WriteAllText(debugFile, output);
             }
             
-            var json = YamlConverter.ToJson(output);
+            var json = Converter.ToJson(output);
             json = JsonConverter.Format(json);
             (Out ?? Console.Out).WriteLine(json);
             return 0;

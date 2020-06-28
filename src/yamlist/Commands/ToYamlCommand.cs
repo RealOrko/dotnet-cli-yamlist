@@ -22,7 +22,7 @@ namespace yamlist.Commands
         public int Execute(ToYamlArguments args)
         {
             var input = Input ?? File.ReadAllText(args.InputFile);
-            var output = YamlConverter.ToYaml(input);
+            var output = Converter.ToYaml(input);
 
             if (args.Debug)
             {
@@ -30,7 +30,7 @@ namespace yamlist.Commands
                 File.WriteAllText(debugFile, output);
             }
             
-            var json = YamlReverseTransformer.Transform(output);
+            var json = ReverseConverter.Transform(output);
             (Out ?? Console.Out).WriteLine(json);
             return 0;
         }

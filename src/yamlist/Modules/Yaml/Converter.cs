@@ -1,13 +1,12 @@
 using System.Dynamic;
 using System.IO;
-using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using YamlDotNet.Serialization;
 
 namespace yamlist.Modules.Yaml
 {
-    public class YamlConverter
+    public class Converter
     {
         public static string ToJson(string input)
         {
