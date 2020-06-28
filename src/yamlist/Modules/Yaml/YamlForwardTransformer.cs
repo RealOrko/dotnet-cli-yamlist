@@ -30,40 +30,52 @@ namespace yamlist.Modules.Yaml
         {
             if (!currentLine.Contains("regexp:"))
             {
+                ForwardMergeAnchorUsageReplacement(ref currentLine, counter);
+                ForwardMergeAnchorReplacement(ref currentLine, counter);
                 ForwardAnchorReplacement(ref currentLine);
-                ForwardMergeIntoReplacement(ref currentLine, counter);
                 ForwardAnchorUsageReplacement(ref currentLine, counter);
             }
         }
 
         private static void ForwardAnchorReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(:\s*\&)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.Anchor.ForwardRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(:\s*\&)", "___anchor___");
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.Anchor.ForwardRegEx, YamlTransformerSymbols.Anchor.ForwardReplacement);
                 currentLine = currentLine + ":";
             }
         }
 
-        private static void ForwardMergeIntoReplacement(ref string currentLine, int counter)
+        private static void ForwardMergeAnchorReplacement(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, @"(<<:\s*\*)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchor.ForwardRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(<<:\s*\*)", $"___merge___{counter}___: ");
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchor.ForwardRegEx, string.Format(YamlTransformerSymbols.MergeAnchor.ForwardReplacement, counter));
+                currentLine = currentLine + ":";
             }
         }
 
         private static void ForwardAnchorUsageReplacement(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, @"(?=[\ \t])(\s*\*)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorUsage.ForwardRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(?=[\ \t])(\s*\*)", $" ___call___{counter}___");
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorUsage.ForwardRegEx, string.Format(YamlTransformerSymbols.AnchorUsage.ForwardReplacement, counter));
+            }
+        }
+        
+        private static void ForwardMergeAnchorUsageReplacement(ref string currentLine, int counter)
+        {
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorUsage.ForwardRegEx);
+            if (match.Success)
+            {
+                currentLine = currentLine.TrimEnd();
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorUsage.ForwardRegEx, string.Format(YamlTransformerSymbols.MergeAnchorUsage.ForwardReplacement, counter));
             }
         }
     }
