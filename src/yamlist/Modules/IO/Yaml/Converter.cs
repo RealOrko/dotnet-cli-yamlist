@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using YamlDotNet.Serialization;
 
-namespace yamlist.Modules.Yaml
+namespace yamlist.Modules.IO.Yaml
 {
     public class Converter
     {

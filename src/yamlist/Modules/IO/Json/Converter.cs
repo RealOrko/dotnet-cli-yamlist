@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace yamlist.Modules.Json
+namespace yamlist.Modules.IO.Json
 {
     public class Converter
     {

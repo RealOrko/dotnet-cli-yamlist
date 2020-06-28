@@ -1,8 +1,7 @@
-using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace yamlist.Modules.Yaml
+namespace yamlist.Modules.IO.Yaml
 {
     public class ReverseConverter
     {

@@ -5,7 +5,7 @@ using SharpCompress.Common;
 using SharpCompress.Readers;
 using OperatingSystem = yamlist.Modules.Process.OperatingSystem;
 
-namespace yamlist.Modules.Archiving
+namespace yamlist.Modules.IO.Compression
 {
     public class Archive
     {

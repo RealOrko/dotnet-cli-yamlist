@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace yamlist.Modules.Http.GitHubModel
+namespace yamlist.Modules.IO.Http.GitHubModel
 {
     public class CommitModel
     {

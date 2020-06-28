@@ -1,4 +1,4 @@
-namespace yamlist.Modules.Yaml
+namespace yamlist.Modules.IO.Yaml
 {
     public class TransformSymbol
     {

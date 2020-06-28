@@ -4,11 +4,11 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using yamlist.Modules.Http.GitHubModel;
-using yamlist.Modules.Http.GitHubModel.Interfaces;
+using yamlist.Modules.IO.Http.GitHubModel;
+using yamlist.Modules.IO.Http.GitHubModel.Interfaces;
 using yamlist.Modules.Versioning;
 
-namespace yamlist.Modules.Http
+namespace yamlist.Modules.IO.Http
 {
     public class GitHubClient
     {

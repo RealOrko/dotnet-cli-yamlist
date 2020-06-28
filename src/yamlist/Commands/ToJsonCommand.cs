@@ -3,9 +3,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Json;
-using yamlist.Modules.Yaml;
-using Converter = yamlist.Modules.Json.Converter;
+using yamlist.Modules.IO.Yaml;
+using Converter = yamlist.Modules.IO.Json.Converter;
 
 namespace yamlist.Commands
 {
@@ -32,7 +31,7 @@ namespace yamlist.Commands
                 File.WriteAllText(debugFile, output);
             }
             
-            var json = Modules.Yaml.Converter.ToJson(output);
+            var json = Modules.IO.Yaml.Converter.ToJson(output);
             json = Converter.Format(json);
             (Out ?? Console.Out).WriteLine(json);
             return 0;

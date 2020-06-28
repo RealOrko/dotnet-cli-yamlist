@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Yaml;
+using yamlist.Modules.IO.Yaml;
 
 namespace yamlist.Commands
 {
