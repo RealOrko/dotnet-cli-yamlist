@@ -53,7 +53,7 @@ namespace yamlist.Modules.Yaml
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(<<:\s*\*)", $"___merge_anchor_into_{counter}___: ");
+                currentLine = Regex.Replace(currentLine, @"(<<:\s*\*)", $"___merge___{counter}___: ");
             }
         }
 
@@ -63,7 +63,7 @@ namespace yamlist.Modules.Yaml
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(?=[\ \t])(\s*\*)", $" ___anchor_call_{counter}___");
+                currentLine = Regex.Replace(currentLine, @"(?=[\ \t])(\s*\*)", $" ___call___{counter}___");
             }
         }
     }

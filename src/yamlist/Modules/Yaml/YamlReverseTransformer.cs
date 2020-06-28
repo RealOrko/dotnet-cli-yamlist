@@ -45,21 +45,21 @@ namespace yamlist.Modules.Yaml
 
         private static void ReverseMergeIntoReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(___merge_anchor_into_\d*___:\s)");
+            var match = Regex.Match(currentLine, @"(___merge___\d*___:\s)");
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(___merge_anchor_into_\d*___:\s)", "<<: *");
+                currentLine = Regex.Replace(currentLine, @"(___merge___\d*___:\s)", "<<: *");
             }
         }
 
         private static void ReverseAnchorUsageReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(___anchor_call_\d*___)");
+            var match = Regex.Match(currentLine, @"(___call___\d*___)");
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(___anchor_call_\d*___)", "*");
+                currentLine = Regex.Replace(currentLine, @"(___call___\d*___)", "*");
             }
         }
         
