@@ -51,7 +51,7 @@ namespace yamlist.Modules.Commands.Options
             }
 
             var help = builder.ToString();
-            Console.WriteLine(help);
+            System.Console.WriteLine(help);
 
             return help;
         }

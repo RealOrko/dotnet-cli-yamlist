@@ -1,8 +1,8 @@
 using System;
 using System.Text.Json.Serialization;
-using yamlist.Modules.Serialisation.Interfaces;
+using yamlist.Modules.Http.GitHubModel.Interfaces;
 
-namespace yamlist.Modules.Serialisation
+namespace yamlist.Modules.Http.GitHubModel
 {
     public class ReleaseModel : IHaveAssetsUrl
     {

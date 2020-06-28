@@ -2,21 +2,21 @@
 using System.Linq;
 using yamlist.Modules.Commands.Options;
 
-namespace yamlist.Modules.Commands.Routing
+namespace yamlist.Modules.Commands
 {
-    public class CommandFactory
+    public class Factory
     {
-        public CommandDispatcher CreateDispatcher(CommandContext context, Type commandType)
+        public Dispatcher CreateDispatcher(Context context, Type commandType)
         {
             var arguments = CommandParser.GetArguments(commandType, context.Arguments);
             var command = CreateCommand(commandType, context);
 
-            var dispatcher = new CommandDispatcher(context, command, new[] {arguments});
+            var dispatcher = new Dispatcher(context, command, new[] {arguments});
             dispatcher.Context = context;
             return dispatcher;
         }
 
-        private object CreateCommand(Type selectedCommandType, CommandContext context)
+        private object CreateCommand(Type selectedCommandType, Context context)
         {
             var ctor = selectedCommandType.GetConstructors().First();
             var instance = ctor.Invoke(new[] {context});

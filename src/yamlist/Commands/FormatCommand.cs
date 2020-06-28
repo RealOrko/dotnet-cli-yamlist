@@ -1,19 +1,19 @@
 using System;
 using System.IO;
+using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Routing;
 
 namespace yamlist.Commands
 {
     [Binds(typeof(FormatArguments))]
     public class FormatCommand
     {
-        public FormatCommand(CommandContext context)
+        public FormatCommand(Context context)
         {
             Context = context;
         }
 
-        public CommandContext Context { get; }
+        public Context Context { get; }
 
         public int Execute(FormatArguments args)
         {

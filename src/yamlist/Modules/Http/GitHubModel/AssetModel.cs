@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace yamlist.Modules.Serialisation
+namespace yamlist.Modules.Http.GitHubModel
 {
     public class AssetModel
     {

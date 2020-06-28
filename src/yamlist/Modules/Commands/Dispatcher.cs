@@ -2,22 +2,22 @@
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 
-namespace yamlist.Modules.Commands.Routing
+namespace yamlist.Modules.Commands
 {
-    public class CommandDispatcher
+    public class Dispatcher
     {
-        public CommandDispatcher(object instance)
+        public Dispatcher(object instance)
         {
             Instance = instance;
             ExecuteMethodInfo = Instance.GetType().GetMethod("Execute");
         }
 
-        public CommandDispatcher(object instance, object[] parameters) : this(instance)
+        public Dispatcher(object instance, object[] parameters) : this(instance)
         {
             Parameters = parameters;
         }
 
-        public CommandDispatcher(CommandContext context, object instance, object[] parameters) : this(instance,
+        public Dispatcher(Context context, object instance, object[] parameters) : this(instance,
             parameters)
         {
             Context = context;
@@ -26,7 +26,7 @@ namespace yamlist.Modules.Commands.Routing
         public object Instance { get; }
         public object[] Parameters { get; }
         public Type CommandType => Instance.GetType();
-        public CommandContext Context { get; set; }
+        public Context Context { get; set; }
         public MethodInfo ExecuteMethodInfo { get; }
 
         public int Execute()

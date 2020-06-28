@@ -1,10 +1,10 @@
 using System.Linq;
 
-namespace yamlist.Modules.Commands.Routing
+namespace yamlist.Modules.Commands
 {
-    public class CommandContext
+    public class Context
     {
-        public CommandContext(string[] args)
+        public Context(string[] args)
         {
             Command = args[0];
             Arguments = args.Skip(1).Take(args.Length - 1).ToArray();

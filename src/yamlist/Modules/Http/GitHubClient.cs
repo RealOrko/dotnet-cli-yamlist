@@ -4,8 +4,8 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using yamlist.Modules.Serialisation;
-using yamlist.Modules.Serialisation.Interfaces;
+using yamlist.Modules.Http.GitHubModel;
+using yamlist.Modules.Http.GitHubModel.Interfaces;
 using yamlist.Modules.Versioning;
 
 namespace yamlist.Modules.Http
@@ -141,30 +141,34 @@ namespace yamlist.Modules.Http
             }
 
             DownloadProgress(targetFileName, totalBytes, totalBytesReadSoFar);
-            Console.WriteLine("");
+            System.Console.WriteLine("");
 
             return fileInfo.FullName;
         }
 
         private static void DownloadProgress(string targetFileName, long? totalBytes, int totalBytesReadSoFar)
         {
-            Console.SetCursorPosition(0, Console.CursorTop);
+            System.Console.SetCursorPosition(0, System.Console.CursorTop);
             if (totalBytes.Value == 0)
-                Console.Write($"{targetFileName}: {totalBytesReadSoFar / 1024}/??? KB");
+            {
+                System.Console.Write($"{targetFileName}: {totalBytesReadSoFar / 1024}/??? KB");
+            }
             else
-                Console.Write($"{targetFileName}: {totalBytesReadSoFar / 1024}/{totalBytes / 1024} KB");
+            {
+                System.Console.Write($"{targetFileName}: {totalBytesReadSoFar / 1024}/{totalBytes / 1024} KB");
+            }
         }
 
         private static T Deserialize<T>(HttpResponseMessage response, bool dumpContent = false)
         {
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-            if (dumpContent) Console.WriteLine(content);
+            if (dumpContent) System.Console.WriteLine(content);
 
             if (!response.IsSuccessStatusCode)
             {
                 var error = JsonSerializer.Deserialize<ErrorModel>(content);
-                Console.WriteLine($"{error.Message}, please see {error.Url}");
+                System.Console.WriteLine($"{error.Message}, please see {error.Url}");
                 return default;
             }
 

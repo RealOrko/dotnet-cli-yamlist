@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace yamlist.Modules.Json
 {
-    public class JsonConverter
+    public class Converter
     {
         public static string Format(string json)
         {

@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Routing;
 using yamlist.Modules.Yaml;
 
 namespace yamlist.Commands
@@ -10,14 +10,14 @@ namespace yamlist.Commands
     [Binds(typeof(ToYamlArguments))]
     public class ToYamlCommand
     {
-        public ToYamlCommand(CommandContext context)
+        public ToYamlCommand(Context context)
         {
             Context = context;
         }
 
         public string Input { get; set; }
         public StringWriter Out { get; set; }
-        public CommandContext Context { get; }
+        public Context Context { get; }
 
         public int Execute(ToYamlArguments args)
         {

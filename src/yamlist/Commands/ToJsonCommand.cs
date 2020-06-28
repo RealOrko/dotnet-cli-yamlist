@@ -1,24 +1,25 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Routing;
 using yamlist.Modules.Json;
 using yamlist.Modules.Yaml;
+using Converter = yamlist.Modules.Json.Converter;
 
 namespace yamlist.Commands
 {
     [Binds(typeof(ToJsonArguments))]
     public class ToJsonCommand
     {
-        public ToJsonCommand(CommandContext context)
+        public ToJsonCommand(Context context)
         {
             Context = context;
         }
 
         public string Input { get; set; }
         public StringWriter Out { get; set; }
-        public CommandContext Context { get; }
+        public Context Context { get; }
 
         public int Execute(ToJsonArguments args)
         {
@@ -31,8 +32,8 @@ namespace yamlist.Commands
                 File.WriteAllText(debugFile, output);
             }
             
-            var json = Converter.ToJson(output);
-            json = JsonConverter.Format(json);
+            var json = Modules.Yaml.Converter.ToJson(output);
+            json = Converter.Format(json);
             (Out ?? Console.Out).WriteLine(json);
             return 0;
         }

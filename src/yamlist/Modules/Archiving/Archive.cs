@@ -40,11 +40,11 @@ namespace yamlist.Modules.Archiving
                                             .SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH"))
                                             .Execute("ln", "-s", actualPath, symbolicLink);
 
-                                        if (result.HasErrorOutput()) Console.WriteLine(result.ErrorOutput);
+                                        if (result.HasErrorOutput()) System.Console.WriteLine(result.ErrorOutput);
                                     }
                                     else
                                     {
-                                        Console.WriteLine(
+                                        System.Console.WriteLine(
                                             $"Could not write symlink {symbolicLink} -> {actualPath}, for more information please see https://github.com/dotnet/runtime/issues/24271");
                                     }
                                 }

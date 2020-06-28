@@ -1,14 +1,14 @@
 ﻿using System;
+using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Routing;
-using yamlist.Modules.Formatters;
 using yamlist.Modules.Versioning;
+using yamlist.Modules.IO;
 
 namespace yamlist
 {
     internal class Program
     {
-        private static readonly CommandRouter _router = new CommandRouter();
+        private static readonly Router _router = new Router();
 
         private static int Main(string[] args)
         {
@@ -33,7 +33,7 @@ namespace yamlist
             }
             catch (Exception err)
             {
-                using (new InColour(ConsoleColor.Red, ConsoleColor.Black))
+                using (new ConsoleColour(ConsoleColor.Red, ConsoleColor.Black))
                 {
                     Console.WriteLine(err.ToString());
                     Console.WriteLine();
