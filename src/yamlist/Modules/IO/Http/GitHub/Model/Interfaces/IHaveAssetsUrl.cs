@@ -1,4 +1,4 @@
-namespace yamlist.Modules.IO.Http.GitHubModel.Interfaces
+namespace yamlist.Modules.IO.Http.GitHub.Model.Interfaces
 {
     public interface IHaveAssetsUrl
     {

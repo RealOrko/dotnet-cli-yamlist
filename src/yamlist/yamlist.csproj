@@ -38,6 +38,7 @@
 		<CurrentYear>$([System.DateTime]::Now.ToString("yyyy"))</CurrentYear>
 		<Copyright>Copyright 2020-$(CurrentYear) RealOrko </Copyright>
 		<ContentTargetFolders>.</ContentTargetFolders>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>

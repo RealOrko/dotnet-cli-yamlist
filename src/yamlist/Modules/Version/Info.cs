@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace yamlist.Modules.Versioning
+namespace yamlist.Modules.Version
 {
     public class Info
     {

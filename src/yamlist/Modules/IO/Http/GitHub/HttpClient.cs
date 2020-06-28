@@ -4,18 +4,18 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using yamlist.Modules.IO.Http.GitHubModel;
-using yamlist.Modules.IO.Http.GitHubModel.Interfaces;
-using yamlist.Modules.Versioning;
+using yamlist.Modules.IO.Http.GitHub.Model;
+using yamlist.Modules.IO.Http.GitHub.Model.Interfaces;
+using yamlist.Modules.Version;
 
-namespace yamlist.Modules.IO.Http
+namespace yamlist.Modules.IO.Http.GitHub
 {
-    public class GitHubClient
+    public class HttpClient
     {
-        private static readonly HttpClient client;
+        private static readonly System.Net.Http.HttpClient client;
         private static HttpClientHandler handler;
 
-        static GitHubClient()
+        static HttpClient()
         {
             var args = CreateNewClient();
             client = args.Item2;
@@ -79,12 +79,12 @@ namespace yamlist.Modules.IO.Http
             return Deserialize<List<AssetModel>>(response);
         }
 
-        private static (HttpClientHandler, HttpClient) CreateNewClient(Action<HttpClientHandler> handlerCallback = null)
+        private static (HttpClientHandler, System.Net.Http.HttpClient) CreateNewClient(Action<HttpClientHandler> handlerCallback = null)
         {
             var httpHandler = new HttpClientHandler();
             handlerCallback?.Invoke(httpHandler);
 
-            var httpClient = new HttpClient(httpHandler);
+            var httpClient = new System.Net.Http.HttpClient(httpHandler);
             httpClient.BaseAddress = new Uri("https://api.github.com");
             httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("ghinstaller",
                 Info.GetVersion()));
@@ -99,7 +99,7 @@ namespace yamlist.Modules.IO.Http
             return (httpHandler, httpClient);
         }
 
-        private static void CreateNewClientAuthorisationHeader(HttpClient httpClient)
+        private static void CreateNewClientAuthorisationHeader(System.Net.Http.HttpClient httpClient)
         {
             var token = Environment.GetEnvironmentVariable("GHI_TOKEN");
             if (!string.IsNullOrEmpty(token))

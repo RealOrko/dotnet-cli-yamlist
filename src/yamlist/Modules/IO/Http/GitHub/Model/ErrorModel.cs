@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace yamlist.Modules.IO.Http.GitHubModel
+namespace yamlist.Modules.IO.Http.GitHub.Model
 {
     public class ErrorModel
     {

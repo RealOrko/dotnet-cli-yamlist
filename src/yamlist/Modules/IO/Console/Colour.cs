@@ -1,13 +1,13 @@
 using System;
 
-namespace yamlist.Modules.IO
+namespace yamlist.Modules.IO.Console
 {
-    public class ConsoleColour : IDisposable
+    public class Colour : IDisposable
     {
         private readonly ConsoleColor _preBackground;
         private readonly ConsoleColor _preForeground;
 
-        public ConsoleColour(ConsoleColor? background = null, ConsoleColor? foreground = null)
+        public Colour(ConsoleColor? background = null, ConsoleColor? foreground = null)
         {
             _preBackground = System.Console.BackgroundColor;
             _preForeground = System.Console.ForegroundColor;

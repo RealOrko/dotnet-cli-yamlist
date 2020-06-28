@@ -1,8 +1,9 @@
 ﻿using System;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Parsers;
-using yamlist.Modules.Versioning;
 using yamlist.Modules.IO;
+using yamlist.Modules.IO.Console;
+using yamlist.Modules.Version;
 
 namespace yamlist
 {
@@ -33,7 +34,7 @@ namespace yamlist
             }
             catch (Exception err)
             {
-                using (new ConsoleColour(ConsoleColor.Red, ConsoleColor.Black))
+                using (new Colour(ConsoleColor.Red, ConsoleColor.Black))
                 {
                     Console.WriteLine(err.ToString());
                     Console.WriteLine();

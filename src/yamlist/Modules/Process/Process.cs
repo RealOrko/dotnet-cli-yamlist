@@ -80,6 +80,7 @@ namespace yamlist.Modules.Process
                     }
                     catch (InvalidOperationException err)
                     {
+                        Console.WriteLine(err);
                         wasError = true;
                     }
 
