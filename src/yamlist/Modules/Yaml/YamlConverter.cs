@@ -29,7 +29,7 @@ namespace yamlist.Modules.Yaml
             var expConverter = new ExpandoObjectConverter();
             dynamic deserializedObject = JsonConvert.DeserializeObject<ExpandoObject>(input, expConverter);
 
-            var serializer = new YamlDotNet.Serialization.Serializer();
+            var serializer = new Serializer();
             string yaml = serializer.Serialize(deserializedObject);
             
             return yaml;

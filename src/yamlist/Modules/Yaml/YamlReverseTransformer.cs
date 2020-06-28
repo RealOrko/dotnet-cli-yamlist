@@ -36,41 +36,41 @@ namespace yamlist.Modules.Yaml
 
         private static void ReverseAnchorReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorDecl.ReverseRegEx);
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorDecl.Reverse.RegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd().TrimEnd(':');
-                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorDecl.ReverseRegEx, YamlTransformerSymbols.AnchorDecl.ReverseReplacement);
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorDecl.Reverse.RegEx, YamlTransformerSymbols.AnchorDecl.Reverse.Replacement);
             }
         }
 
         private static void ReverseMergeAnchorReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorDecl.ReverseRegEx);
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorDecl.Reverse.RegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd().TrimEnd(':');
-                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorDecl.ReverseRegEx, YamlTransformerSymbols.MergeAnchorDecl.ReverseReplacement);
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorDecl.Reverse.RegEx, YamlTransformerSymbols.MergeAnchorDecl.Reverse.Replacement);
             }
         }
 
         private static void ReverseAnchorUsageReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorCall.ReverseRegEx);
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorCall.Reverse.RegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorCall.ReverseRegEx, YamlTransformerSymbols.AnchorCall.ReverseReplacement);
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorCall.Reverse.RegEx, YamlTransformerSymbols.AnchorCall.Reverse.Replacement);
             }
         }
         
         private static void ReverseMergeAnchorUsageReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorCall.ReverseRegEx);
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorCall.Reverse.RegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorCall.ReverseRegEx, YamlTransformerSymbols.MergeAnchorCall.ReverseReplacement);
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorCall.Reverse.RegEx, YamlTransformerSymbols.MergeAnchorCall.Reverse.Replacement);
             }
         }
         
