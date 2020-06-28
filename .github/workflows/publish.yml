@@ -10,7 +10,6 @@ on:
 
 jobs:
   publish:
-    name: Publish NUGET
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
