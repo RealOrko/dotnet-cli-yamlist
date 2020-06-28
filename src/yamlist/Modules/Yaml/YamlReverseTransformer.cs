@@ -26,44 +26,55 @@ namespace yamlist.Modules.Yaml
 
         private static void ReverseTransformLine(ref string currentLine)
         {
+            ReverseMergeAnchorUsageReplacement(ref currentLine);
+            ReverseMergeAnchorReplacement(ref currentLine);
             ReverseAnchorReplacement(ref currentLine);
-            ReverseMergeIntoReplacement(ref currentLine);
             ReverseAnchorUsageReplacement(ref currentLine);
-            Reverse_v_1_1_yaml_multiline_block_1(ref currentLine);
-            Reverse_v_1_1_yaml_multiline_block_2(ref currentLine);
+            ReverseFoldToMultiline(ref currentLine);
+            ReverseFoldToMultilineArray(ref currentLine);
         }
 
         private static void ReverseAnchorReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(___anchor___)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.Anchor.ReverseRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd().TrimEnd(':');
-                currentLine = Regex.Replace(currentLine, @"(___anchor___)", ": &");
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.Anchor.ReverseRegEx, YamlTransformerSymbols.Anchor.ReverseReplacement);
             }
         }
 
-        private static void ReverseMergeIntoReplacement(ref string currentLine)
+        private static void ReverseMergeAnchorReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(___merge___\d*___:\s)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchor.ReverseRegEx);
             if (match.Success)
             {
-                currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(___merge___\d*___:\s)", "<<: *");
+                currentLine = currentLine.TrimEnd().TrimEnd(':');
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchor.ReverseRegEx, YamlTransformerSymbols.MergeAnchor.ReverseReplacement);
             }
         }
 
         private static void ReverseAnchorUsageReplacement(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, @"(___call___\d*___)");
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.AnchorUsage.ReverseRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, @"(___call___\d*___)", "*");
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.AnchorUsage.ReverseRegEx, YamlTransformerSymbols.AnchorUsage.ReverseReplacement);
             }
         }
         
-        private static void Reverse_v_1_1_yaml_multiline_block_1(ref string currentLine)
+        private static void ReverseMergeAnchorUsageReplacement(ref string currentLine)
+        {
+            var match = Regex.Match(currentLine, YamlTransformerSymbols.MergeAnchorUsage.ReverseRegEx);
+            if (match.Success)
+            {
+                currentLine = currentLine.TrimEnd();
+                currentLine = Regex.Replace(currentLine, YamlTransformerSymbols.MergeAnchorUsage.ReverseRegEx, YamlTransformerSymbols.MergeAnchorUsage.ReverseReplacement);
+            }
+        }
+        
+        private static void ReverseFoldToMultiline(ref string currentLine)
         {
             var match = Regex.Match(currentLine, @"(:\s>)");
             if (match.Success)
@@ -73,7 +84,7 @@ namespace yamlist.Modules.Yaml
             }
         }
         
-        private static void Reverse_v_1_1_yaml_multiline_block_2(ref string currentLine)
+        private static void ReverseFoldToMultilineArray(ref string currentLine)
         {
             var match = Regex.Match(currentLine, @"(-\s>)");
             if (match.Success)
