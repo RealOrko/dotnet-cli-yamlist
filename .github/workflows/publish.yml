@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches:
-      - foo
+      - master
     paths-ignore:
       - README.md
 
@@ -23,5 +23,5 @@ jobs:
           VERSION_REGEX: <Version>(.*)<\/Version>
           TAG_COMMIT: true
           TAG_FORMAT: v*
-          NUGET_KEY: ${{secrets.DOTNET_CLI_ZIP}}
+          NUGET_KEY: ${{secrets.DOTNET_CLI_YAMLIST}}
           INCLUDE_SYMBOLS: true
