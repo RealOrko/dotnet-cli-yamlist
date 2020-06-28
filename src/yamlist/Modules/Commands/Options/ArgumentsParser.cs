@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using yamlist.Modules.Commands.Options.Attributes;
 
 namespace yamlist.Modules.Commands.Options
 {

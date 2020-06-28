@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Options;
+using yamlist.Modules.Commands.Options.Attributes;
 
 namespace yamlist.Commands
 {
