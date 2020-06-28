@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using yamlist.Modules.Commands.Options;
 using yamlist.Modules.Commands.Routing;
+using yamlist.Modules.Json;
 using yamlist.Modules.Yaml;
 
 namespace yamlist.Commands
@@ -31,6 +32,7 @@ namespace yamlist.Commands
             }
             
             var json = YamlConverter.ToJson(output);
+            json = JsonConverter.Format(json);
             (Out ?? Console.Out).WriteLine(json);
             return 0;
         }
