@@ -2,8 +2,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
-using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Options.Attributes;
+using yamlist.Modules.Commands.Attributes;
 using yamlist.Modules.IO.Yaml;
 
 namespace yamlist.Commands

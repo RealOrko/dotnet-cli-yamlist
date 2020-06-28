@@ -1,6 +1,6 @@
 ﻿using System;
 using yamlist.Modules.Commands;
-using yamlist.Modules.Commands.Options;
+using yamlist.Modules.Commands.Parsers;
 using yamlist.Modules.Versioning;
 using yamlist.Modules.IO;
 

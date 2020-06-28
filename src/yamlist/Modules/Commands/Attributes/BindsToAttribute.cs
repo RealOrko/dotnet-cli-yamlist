@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace yamlist.Modules.Commands.Options.Attributes
+namespace yamlist.Modules.Commands.Attributes
 {
     public class BindsAttribute : Attribute
     {

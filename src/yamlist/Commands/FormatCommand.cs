@@ -1,8 +1,7 @@
 using System;
 using System.IO;
 using yamlist.Modules.Commands;
-using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Options.Attributes;
+using yamlist.Modules.Commands.Attributes;
 
 namespace yamlist.Commands
 {

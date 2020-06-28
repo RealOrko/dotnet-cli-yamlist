@@ -1,5 +1,4 @@
-using yamlist.Modules.Commands.Options;
-using yamlist.Modules.Commands.Options.Attributes;
+using yamlist.Modules.Commands.Attributes;
 
 namespace yamlist.Commands
 {

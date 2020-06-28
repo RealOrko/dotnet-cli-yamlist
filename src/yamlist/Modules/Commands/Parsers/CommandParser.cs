@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using yamlist.Modules.Commands.Options.Attributes;
+using yamlist.Modules.Commands.Attributes;
 
-namespace yamlist.Modules.Commands.Options
+namespace yamlist.Modules.Commands.Parsers
 {
     public class CommandParser
     {
