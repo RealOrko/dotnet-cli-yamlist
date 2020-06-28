@@ -19,7 +19,7 @@ yi json
 
 ### Examples
 
-Reformat yaml file:
+For converting yaml to json:
 
 ```bash
 yi json -f ~/code/mypipeline/ci/deploy.yml
