@@ -15,7 +15,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.0.4</Version>
+		<Version>0.0.5</Version>
 		<Authors>RealOrko</Authors>
 		<Description>A tool that provides macro cli functions for working with yaml used in concourse pipelines :)</Description>
 		<PackageId>dotnet-cli-yamlist</PackageId>
