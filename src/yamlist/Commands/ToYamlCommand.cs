@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Attributes;
 using yamlist.Modules.IO.Yaml;
+using yamlist.Modules.IO.Yaml.Transformers;
 
 namespace yamlist.Commands
 {

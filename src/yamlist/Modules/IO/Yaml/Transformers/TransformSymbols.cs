@@ -1,4 +1,4 @@
-namespace yamlist.Modules.IO.Yaml
+namespace yamlist.Modules.IO.Yaml.Transformers
 {
     public static class TransformSymbols
     {
