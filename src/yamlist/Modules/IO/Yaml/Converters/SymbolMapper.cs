@@ -1,26 +1,26 @@
-namespace yamlist.Modules.IO.Yaml.Transformers
+namespace yamlist.Modules.IO.Yaml.Converters
 {
-    public static class TransformSymbols
+    public static class SymbolMapper
     {
-        public static readonly TransformSymbol AnchorDeclaration = new TransformSymbol(
+        public static readonly SymbolMap AnchorDeclaration = new SymbolMap(
             @"(:\s*\&)", 
             "_anchor_decl_", 
             @"(_anchor_decl_)", 
             ": &");
 
-        public static readonly TransformSymbol MergeAnchorDeclaration = new TransformSymbol(
+        public static readonly SymbolMap MergeAnchorDeclaration = new SymbolMap(
             @"(<<\s*:\s*\&)", 
             "_merge_anchor_decl_{0}_", 
             @"(_merge_anchor_decl_\d*_)", 
             "<<: &");
 
-        public static readonly TransformSymbol AnchorCall = new TransformSymbol(
+        public static readonly SymbolMap AnchorCall = new SymbolMap(
             @"(?=[\ \t])(\s*\*)", 
             " _anchor_call_{0}_", 
             @"(_anchor_call_\d*_)", 
             "*");
 
-        public static readonly TransformSymbol MergeAnchorCall = new TransformSymbol(
+        public static readonly SymbolMap MergeAnchorCall = new SymbolMap(
             @"(<<\s*:\s*\*)", 
             "_merge_{0}_: _call_anchor_{0}_", 
             @"(_merge_\d*_:\s*_call_anchor_\d*_)", 

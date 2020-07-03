@@ -1,4 +1,4 @@
-namespace yamlist.Modules.IO.Yaml.Transformers
+namespace yamlist.Modules.IO.Yaml.Converters
 {
     public class Symbol
     {

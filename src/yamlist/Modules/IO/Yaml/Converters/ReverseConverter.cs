@@ -1,11 +1,11 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace yamlist.Modules.IO.Yaml.Transformers
+namespace yamlist.Modules.IO.Yaml.Converters
 {
     public class ReverseConverter
     {
-        public static string Transform(string input)
+        public static string Convert(string input)
         {
             var reader = new StringReader(input);
             var writer = new StringWriter();
@@ -16,14 +16,14 @@ namespace yamlist.Modules.IO.Yaml.Transformers
             {
                 currentLine = reader.ReadLine();
                 if (string.IsNullOrEmpty(currentLine)) continue;
-                TransformLine(ref currentLine);
+                ConvertLine(ref currentLine);
                 writer.WriteLine(currentLine);
             } while (currentLine != null);
 
             return writer.ToString();
         }
 
-        private static void TransformLine(ref string currentLine)
+        private static void ConvertLine(ref string currentLine)
         {
             MergeAnchorCall(ref currentLine);
             MergeAnchorDeclaration(ref currentLine);
@@ -35,41 +35,41 @@ namespace yamlist.Modules.IO.Yaml.Transformers
 
         private static void AnchorDeclaration(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, TransformSymbols.AnchorDeclaration.Reverse.FindRegEx);
+            var match = Regex.Match(currentLine, SymbolMapper.AnchorDeclaration.Reverse.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd().TrimEnd(':');
-                currentLine = Regex.Replace(currentLine, TransformSymbols.AnchorDeclaration.Reverse.FindRegEx, TransformSymbols.AnchorDeclaration.Reverse.ReplaceWith);
+                currentLine = Regex.Replace(currentLine, SymbolMapper.AnchorDeclaration.Reverse.FindRegEx, SymbolMapper.AnchorDeclaration.Reverse.ReplaceWith);
             }
         }
 
         private static void MergeAnchorDeclaration(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, TransformSymbols.MergeAnchorDeclaration.Reverse.FindRegEx);
+            var match = Regex.Match(currentLine, SymbolMapper.MergeAnchorDeclaration.Reverse.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd().TrimEnd(':');
-                currentLine = Regex.Replace(currentLine, TransformSymbols.MergeAnchorDeclaration.Reverse.FindRegEx, TransformSymbols.MergeAnchorDeclaration.Reverse.ReplaceWith);
+                currentLine = Regex.Replace(currentLine, SymbolMapper.MergeAnchorDeclaration.Reverse.FindRegEx, SymbolMapper.MergeAnchorDeclaration.Reverse.ReplaceWith);
             }
         }
 
         private static void AnchorCall(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, TransformSymbols.AnchorCall.Reverse.FindRegEx);
+            var match = Regex.Match(currentLine, SymbolMapper.AnchorCall.Reverse.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, TransformSymbols.AnchorCall.Reverse.FindRegEx, TransformSymbols.AnchorCall.Reverse.ReplaceWith);
+                currentLine = Regex.Replace(currentLine, SymbolMapper.AnchorCall.Reverse.FindRegEx, SymbolMapper.AnchorCall.Reverse.ReplaceWith);
             }
         }
         
         private static void MergeAnchorCall(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, TransformSymbols.MergeAnchorCall.Reverse.FindRegEx);
+            var match = Regex.Match(currentLine, SymbolMapper.MergeAnchorCall.Reverse.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, TransformSymbols.MergeAnchorCall.Reverse.FindRegEx, TransformSymbols.MergeAnchorCall.Reverse.ReplaceWith);
+                currentLine = Regex.Replace(currentLine, SymbolMapper.MergeAnchorCall.Reverse.FindRegEx, SymbolMapper.MergeAnchorCall.Reverse.ReplaceWith);
             }
         }
         

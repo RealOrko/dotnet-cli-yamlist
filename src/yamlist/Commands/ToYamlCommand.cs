@@ -4,7 +4,8 @@ using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Attributes;
 using yamlist.Modules.IO.Yaml;
-using yamlist.Modules.IO.Yaml.Transformers;
+using yamlist.Modules.IO.Yaml.Converters;
+using Converter = yamlist.Modules.IO.Yaml.Converter;
 
 namespace yamlist.Commands
 {
@@ -31,7 +32,7 @@ namespace yamlist.Commands
                 File.WriteAllText(debugFile, output);
             }
             
-            var json = ReverseConverter.Transform(output);
+            var json = ReverseConverter.Convert(output);
             (Out ?? Console.Out).WriteLine(json);
             return 0;
         }
