@@ -21,8 +21,8 @@ namespace yamlist.Commands
             var toJson = new ToJsonCommand(Context) {Out = jsonWriter};
             toJson.Execute(new ToJsonArguments {InputFile = args.InputFile});
 
-            var pipeline = yamlist.Modules.IO.Yaml.Converter.JsonToConcourse(jsonWriter.ToString());
-            var concourseJson = yamlist.Modules.IO.Yaml.Converter.ConcourseToJson(pipeline);
+            var pipeline = Modules.IO.Json.Converter.JsonToConcourse(jsonWriter.ToString());
+            var concourseJson = Modules.IO.Json.Converter.ConcourseToJson(pipeline);
 
             var yamlWriter = new StringWriter();
             var toYaml = new ToYamlCommand(Context) {Out = yamlWriter};

@@ -10,7 +10,7 @@ cp ../paas-azure-pcf-deployment/ci/deploy.yml ./build/d.yml
 pushd ./build
 
 # Testing the concourse serialisation
-# ./yi concourse -f d.yml > y.yml
+./yi concourse -f d.yml > y.yml
 
 # Testing the yaml to json conversion with the yaml symbol transformers
 ./yi json -f d.yml > j.json -d

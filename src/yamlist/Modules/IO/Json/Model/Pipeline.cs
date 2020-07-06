@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace yamlist.Modules.IO.Yaml.Model
+namespace yamlist.Modules.IO.Json.Model
 {
     public class Pipeline
     {

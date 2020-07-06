@@ -3,7 +3,6 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using YamlDotNet.Serialization;
-using yamlist.Modules.IO.Yaml.Model;
 
 namespace yamlist.Modules.IO.Yaml
 {
@@ -33,16 +32,6 @@ namespace yamlist.Modules.IO.Yaml
             string yaml = serializer.Serialize(deserializedObject);
             
             return yaml;
-        }
-
-        public static Pipeline JsonToConcourse(string input)
-        {
-            return JsonConvert.DeserializeObject<Pipeline>(input);
-        }
-
-        public static string ConcourseToJson(Pipeline input)
-        {
-            return JsonConvert.SerializeObject(input);
         }
     }
 }
