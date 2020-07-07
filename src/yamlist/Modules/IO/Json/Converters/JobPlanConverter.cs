@@ -98,14 +98,12 @@ namespace yamlist.Modules.IO.Json.Converters
                 
                 if (property.Name == "input_mapping")
                 {
-                    jobPlan.File = property.Value?.ToString();
                     jobPlan.InputMapping = JsonConvert.DeserializeObject<Dictionary<string, string>>(property.Value?.ToString());
                     continue;
                 }
                 
                 if (property.Name == "output_mapping")
                 {
-                    jobPlan.File = property.Value?.ToString();
                     jobPlan.OutputMapping = JsonConvert.DeserializeObject<Dictionary<string, string>>(property.Value?.ToString());
                 }
 
