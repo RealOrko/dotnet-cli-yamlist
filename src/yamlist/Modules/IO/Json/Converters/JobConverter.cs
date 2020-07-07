@@ -22,7 +22,41 @@ namespace yamlist.Modules.IO.Json.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartObject();
+
+            if (value is Job j)
+            {
+                if (!string.IsNullOrEmpty(j.Name))
+                {
+                    writer.WritePropertyName("name");
+                    writer.WriteValue(j.Name);
+                }
+
+                if (j.Serial)
+                {
+                    writer.WritePropertyName("serial");
+                    writer.WriteValue(true);
+                }
+                
+                if (j.SerialGroups != null && j.SerialGroups.Count > 0)
+                {
+                    writer.WritePropertyName("serial_groups");
+                    writer.WriteStartArray();
+                    foreach (var sg in j.SerialGroups)
+                    {
+                        writer.WriteValue(sg);
+                    }
+                    writer.WriteEndArray();
+                }
+                
+                if (j.Plan != null && j.Plan.Count > 0)
+                {
+                    var planJson = JsonConvert.SerializeObject(j.Plan);
+                    writer.WriteRaw(planJson);
+                }
+            }
+            
+            writer.WriteEndObject();
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

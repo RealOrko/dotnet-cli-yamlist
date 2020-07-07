@@ -26,6 +26,9 @@ namespace yamlist.Modules.IO.Json.Model
         [JsonProperty("task")]
         public string Task { get; set; }
         
+        [JsonProperty("image")]
+        public string Image { get; set; }
+        
         [JsonProperty("file")]
         public string File { get; set; }
         
@@ -40,6 +43,9 @@ namespace yamlist.Modules.IO.Json.Model
         
         [JsonProperty("in_parallel")]
         public List<JobPlan> InParallel { get; set; }
+
+        [JsonProperty("do")]
+        public List<JobPlan> Do { get; set; }
 
         public override string ToString()
         {
