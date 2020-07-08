@@ -37,7 +37,7 @@ namespace yamlist.Modules.IO.Json
 
         public static string ConcourseToJson(Pipeline input)
         {
-            return JsonConvert.SerializeObject(input);
+            return JsonConvert.SerializeObject(input, Formatting.Indented);
         }
 
     }
