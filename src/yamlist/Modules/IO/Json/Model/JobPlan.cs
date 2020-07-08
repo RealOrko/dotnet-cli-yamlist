@@ -8,6 +8,12 @@ namespace yamlist.Modules.IO.Json.Model
     [JsonConverter(typeof(JobPlanConverter))]
     public class JobPlan 
     {
+        [JsonProperty("set_pipeline")]
+        public string SetPipeline { get; set; }
+        
+        [JsonProperty("var_files")]
+        public List<string> VarFiles { get; set; }
+        
         [JsonProperty("get")]
         public string Get { get; set; }
         

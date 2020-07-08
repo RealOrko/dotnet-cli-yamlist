@@ -63,6 +63,12 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteEndArray();
             }
                 
+            if (!string.IsNullOrEmpty(jp.SetPipeline))
+            {
+                writer.WritePropertyName("set_pipeline");
+                writer.WriteValue(jp.SetPipeline);
+            }
+
             if (!string.IsNullOrEmpty(jp.Get))
             {
                 writer.WritePropertyName("get");
@@ -97,6 +103,19 @@ namespace yamlist.Modules.IO.Json.Converters
             {
                 writer.WritePropertyName("file");
                 writer.WriteValue(jp.File);
+            }
+
+            if (jp.VarFiles != null && jp.VarFiles.Count > 0)
+            {
+                writer.WritePropertyName("var_files");
+                writer.WriteStartArray();
+
+                foreach (var varFile in jp.VarFiles)
+                {
+                    writer.WriteValue(varFile);
+                }
+
+                writer.WriteEndArray();
             }
 
             if (jp.Attempts > 0)
@@ -192,6 +211,18 @@ namespace yamlist.Modules.IO.Json.Converters
                     var jobPlanObjectType = typeof(List<JobPlan>);
                     var jobPlanJsonReader = new JsonTextReader(new StringReader(property.Value?.ToString()));
                     jobPlan.Do.AddRange(((List<JobPlan>)serializer.Deserialize(jobPlanJsonReader, jobPlanObjectType))!);
+                    continue;
+                }
+
+                if (property.Name == "set_pipeline")
+                {
+                    jobPlan.SetPipeline = property.Value.ToString();
+                    continue;
+                }
+                
+                if (property.Name == "var_files")
+                {
+                    jobPlan.VarFiles = JsonConvert.DeserializeObject<List<string>>(property.Value?.ToString());
                     continue;
                 }
 

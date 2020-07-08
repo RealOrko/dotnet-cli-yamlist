@@ -51,8 +51,13 @@ namespace yamlist.Modules.IO.Json.Converters
                 
                 if (j.Plan != null && j.Plan.Count > 0)
                 {
-                    var planJson = JsonConvert.SerializeObject(j.Plan);
-                    writer.WriteRaw(planJson);
+                    writer.WritePropertyName("plan");
+                    writer.WriteStartArray();
+                    foreach (var p in j.Plan)
+                    {
+                        serializer.Serialize(writer, p, typeof(JobPlan));
+                    }
+                    writer.WriteEndArray();
                 }
             }
             

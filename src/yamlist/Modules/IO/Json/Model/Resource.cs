@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace yamlist.Modules.IO.Json.Model
 {
-    // Need custom serializer
     public class Resource
     {
         [JsonProperty("name")]
@@ -17,12 +15,5 @@ namespace yamlist.Modules.IO.Json.Model
         
         [JsonProperty("source")]
         public ResourceSource Source { get; set; }
-    }
-
-    // Need custom serialiser
-    public class ResourceSource : Dictionary<string, string>
-    {
-        [JsonProperty("ignore_paths")]
-        public List<string> IgnorePaths { get; set; }
     }
 }

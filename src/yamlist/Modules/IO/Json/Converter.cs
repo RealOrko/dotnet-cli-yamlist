@@ -21,12 +21,20 @@ namespace yamlist.Modules.IO.Json
                 ContractResolver = new DisableContractResolver(new[]
                 {
                     typeof(Job),
-                    typeof(JobPlan)
+                    typeof(JobPlan),
+                    typeof(Resource),
+                    typeof(ResourceSource),
+                    typeof(ResourceType),
+                    typeof(ResourceTypeSource),
                 }),
                 Converters = new List<JsonConverter>()
                 {
                     new JobConverter(),
-                    new JobPlanConverter()
+                    new JobPlanConverter(),
+                    new ResourceConverter(),
+                    new ResourceSourceConverter(),
+                    new ResourceTypeConverter(),
+                    new ResourceTypeSourceConverter()
                 }
             };
             
@@ -37,7 +45,29 @@ namespace yamlist.Modules.IO.Json
 
         public static string ConcourseToJson(Pipeline input)
         {
-            return JsonConvert.SerializeObject(input, Formatting.Indented);
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new DisableContractResolver(new[]
+                {
+                    typeof(Job),
+                    typeof(JobPlan),
+                    typeof(Resource),
+                    typeof(ResourceSource),
+                    typeof(ResourceType),
+                    typeof(ResourceTypeSource),
+                }),
+                Converters = new List<JsonConverter>()
+                {
+                    new JobConverter(),
+                    new JobPlanConverter(),
+                    new ResourceConverter(),
+                    new ResourceSourceConverter(),
+                    new ResourceTypeConverter(),
+                    new ResourceTypeSourceConverter()
+                }
+            };
+            
+            return JsonConvert.SerializeObject(input, Formatting.Indented, settings);
         }
 
     }
