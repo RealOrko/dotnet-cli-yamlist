@@ -32,6 +32,12 @@ namespace yamlist.Modules.IO.Json.Converters
                     writer.WriteValue(j.Name);
                 }
 
+                if (j.MergeCall != null)
+                {
+                    writer.WritePropertyName(j.MergeCall.Name);
+                    writer.WriteValue(j.MergeCall.Method);
+                }
+
                 if (j.Serial)
                 {
                     writer.WritePropertyName("serial");

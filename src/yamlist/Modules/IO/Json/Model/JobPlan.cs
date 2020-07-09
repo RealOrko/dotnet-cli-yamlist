@@ -38,9 +38,6 @@ namespace yamlist.Modules.IO.Json.Model
         [JsonProperty("file")]
         public string File { get; set; }
         
-        [JsonProperty("params")]
-        public Dictionary<string, dynamic> Params { get; set; }
-        
         [JsonProperty("input_mapping")]
         public Dictionary<string, string> InputMapping { get; set; }
         
@@ -52,6 +49,18 @@ namespace yamlist.Modules.IO.Json.Model
 
         [JsonProperty("do")]
         public List<JobPlan> Do { get; set; }
+        
+        [JsonProperty("params")]
+        public Dictionary<string, dynamic> Params { get; set; }
+
+        [JsonProperty("get_params")]
+        public Dictionary<string, dynamic> GetParams { get; set; }
+
+        [JsonProperty("put_params")]
+        public Dictionary<string, dynamic> PutParams { get; set; }
+
+        [JsonProperty("ensure")]
+        public string Ensure { get; set; }
 
         public override string ToString()
         {

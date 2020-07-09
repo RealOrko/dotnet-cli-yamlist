@@ -22,6 +22,7 @@ namespace yamlist.Modules.IO.Json.Converters
         {
             if (value is JobPlanAnchorCall jpa)
             {
+                writer.WriteValue(jpa.AnchorCall.Method);
                 return;
             }
 
@@ -35,6 +36,12 @@ namespace yamlist.Modules.IO.Json.Converters
                     writer.WriteStartArray();
                     foreach (var jpp in jp.InParallel)
                     {
+                        if (jpp is JobPlanAnchorCall jppa)
+                        {
+                            writer.WriteValue(jppa.AnchorCall.Method);
+                            continue;
+                        }
+
                         writer.WriteStartObject();
                         WriteJobPlan(writer, jpp);
                         writer.WriteEndObject();
@@ -57,6 +64,25 @@ namespace yamlist.Modules.IO.Json.Converters
                 foreach (var jpp in jp.Do)
                 {
                     writer.WriteStartObject();
+                    if (jpp.InParallel != null && jpp.InParallel.Count > 0)
+                    {
+                        writer.WritePropertyName("in_parallel");
+                        writer.WriteStartArray();
+                        foreach (var jppp in jpp.InParallel)
+                        {
+                            if (jppp is JobPlanAnchorCall jpppa)
+                            {
+                                writer.WriteValue(jpppa.AnchorCall.Method);
+                                continue;
+                            }
+
+                            writer.WriteStartObject();
+                            WriteJobPlan(writer, jppp);
+                            writer.WriteEndObject();
+                        }
+                        writer.WriteEndArray();
+                    }
+                    
                     WriteJobPlan(writer, jpp);
                     writer.WriteEndObject();
                 }
@@ -145,12 +171,23 @@ namespace yamlist.Modules.IO.Json.Converters
                 foreach (var kv in jp.Params)
                 {
                     writer.WritePropertyName(kv.Key);
-                    writer.WriteValue(kv.Value);
+                    if (kv.Value is JArray arr)
+                    {
+                        arr.WriteTo(writer);
+                    }
+                    else if (kv.Value is JObject obj)
+                    {
+                        obj.WriteTo(writer);
+                    }
+                    else
+                    {
+                        writer.WriteValue(kv.Value);
+                    }
                 }
 
                 writer.WriteEndObject();
             }
-
+            
             if (jp.InputMapping != null && jp.InputMapping.Count > 0)
             {
                 writer.WritePropertyName("input_mapping");
@@ -177,6 +214,62 @@ namespace yamlist.Modules.IO.Json.Converters
                 }
 
                 writer.WriteEndObject();
+            }
+            
+            if (jp.GetParams != null && jp.GetParams.Count > 0)
+            {
+                writer.WritePropertyName("get_params");
+                writer.WriteStartObject();
+
+                foreach (var kv in jp.GetParams)
+                {
+                    writer.WritePropertyName(kv.Key);
+                    if (kv.Value is JArray arr)
+                    {
+                        arr.WriteTo(writer);
+                    }
+                    else if (kv.Value is JObject obj)
+                    {
+                        obj.WriteTo(writer);
+                    }
+                    else
+                    {
+                        writer.WriteValue(kv.Value);
+                    }
+                }
+
+                writer.WriteEndObject();
+            }
+            
+            if (jp.PutParams != null && jp.PutParams.Count > 0)
+            {
+                writer.WritePropertyName("put_params");
+                writer.WriteStartObject();
+
+                foreach (var kv in jp.PutParams)
+                {
+                    writer.WritePropertyName(kv.Key);
+                    if (kv.Value is JArray arr)
+                    {
+                        arr.WriteTo(writer);
+                    }
+                    else if (kv.Value is JObject obj)
+                    {
+                        obj.WriteTo(writer);
+                    }
+                    else
+                    {
+                        writer.WriteValue(kv.Value);
+                    }
+                }
+
+                writer.WriteEndObject();
+            }
+            
+            if (!string.IsNullOrEmpty(jp.Ensure))
+            {
+                writer.WritePropertyName("ensure");
+                writer.WriteValue(jp.Ensure);
             }
         }
 
@@ -262,6 +355,12 @@ namespace yamlist.Modules.IO.Json.Converters
                     continue;
                 }
                 
+                if (property.Name == "ensure")
+                {
+                    jobPlan.Ensure = property.Value?.ToString();
+                    continue;
+                }
+                
                 if (property.Name == "image")
                 {
                     jobPlan.Image = property.Value?.ToString();
@@ -277,6 +376,24 @@ namespace yamlist.Modules.IO.Json.Converters
                         "".ToString();
                     }
                     
+                    continue;
+                }
+                
+                if (property.Name == "params")
+                {
+                    jobPlan.Params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
+                    continue;
+                }
+                
+                if (property.Name == "get_params")
+                {
+                    jobPlan.GetParams = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
+                    continue;
+                }
+                
+                if (property.Name == "put_params")
+                {
+                    jobPlan.PutParams = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
                     continue;
                 }
                 
