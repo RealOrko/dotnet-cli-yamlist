@@ -2,12 +2,22 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using yamlist.Modules.IO.Json.Converters;
+using yamlist.Modules.IO.Json.Model.Meta;
 
 namespace yamlist.Modules.IO.Json.Model
 {
     [JsonConverter(typeof(JobPlanConverter))]
     public class JobPlan 
     {
+        [JsonProperty("try")]
+        public JobPlan Try { get; set; }
+        
+        [JsonProperty("task")]
+        public string Task { get; set; }
+        
+        [JsonProperty("config")]
+        public JobPlanConfig Config { get; set; }
+        
         [JsonProperty("set_pipeline")]
         public string SetPipeline { get; set; }
         
@@ -20,6 +30,9 @@ namespace yamlist.Modules.IO.Json.Model
         [JsonProperty("put")]
         public string Put { get; set; }
         
+        [JsonProperty("resource")]
+        public string Resource { get; set; }
+        
         [JsonProperty("attempts")]
         public int Attempts { get; set; }
         
@@ -27,10 +40,7 @@ namespace yamlist.Modules.IO.Json.Model
         public List<string> Passed { get; set; }
         
         [JsonProperty("trigger")]
-        public bool Trigger { get; set; }
-        
-        [JsonProperty("task")]
-        public string Task { get; set; }
+        public string Trigger { get; set; }
         
         [JsonProperty("image")]
         public string Image { get; set; }
@@ -60,7 +70,16 @@ namespace yamlist.Modules.IO.Json.Model
         public Dictionary<string, dynamic> PutParams { get; set; }
 
         [JsonProperty("ensure")]
-        public string Ensure { get; set; }
+        public JobPlanEnsure Ensure { get; set; }
+
+        [JsonProperty("merge_call")]
+        public MergeCall MergeCall { get; set; }
+        
+        [JsonProperty("anchor_call")]
+        public AnchorCall AnchorCall { get; set; }
+
+        public AnchorCall ConfigAnchorCall { get; set; }
+
 
         public override string ToString()
         {

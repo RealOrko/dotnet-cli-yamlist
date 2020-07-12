@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using yamlist.Modules.IO.Json.Model;
+using yamlist.Modules.IO.Json.Model.Meta;
 
 namespace yamlist.Modules.IO.Json.Converters
 {
@@ -19,6 +20,12 @@ namespace yamlist.Modules.IO.Json.Converters
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var resource = (Resource) value;
+
+            if (resource.SourceAnchorCall != null)
+            {
+                writer.WriteValue(resource.SourceAnchorCall.Method);
+                return;
+            }
 
             if (resource != null)
             {
@@ -45,7 +52,15 @@ namespace yamlist.Modules.IO.Json.Converters
                 if (resource.Source != null)
                 {
                     writer.WritePropertyName("source");
-                    serializer.Serialize(writer, resource.Source, typeof(ResourceSource));                    
+
+                    if (resource.SourceAnchorCall != null)
+                    {
+                        writer.WriteValue(resource.SourceAnchorCall.Method);
+                    }
+                    else
+                    {
+                        serializer.Serialize(writer, resource.Source, typeof(ResourceSource));                    
+                    }
                 }
 
                 writer.WriteEndObject();
@@ -55,7 +70,7 @@ namespace yamlist.Modules.IO.Json.Converters
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             var resource = new Resource();
-
+            
             var jObject = JObject.Load(reader);
 
             foreach (var property in jObject.Properties())
@@ -80,9 +95,17 @@ namespace yamlist.Modules.IO.Json.Converters
                 
                 if (property.Name == "source")
                 {
-                    var resourceSourceType = typeof(ResourceSource);
-                    var resourceSourceReader = new JsonTextReader(new StringReader(property.Value?.ToString()));
-                    resource.Source = (ResourceSource)(serializer.Deserialize(resourceSourceReader, resourceSourceType));
+                    if (property.Value == null) continue;
+                    
+                    if (property.Value.ToString().StartsWith("_anchor_call"))
+                    {
+                        resource.SourceAnchorCall = new AnchorCall();
+                        resource.SourceAnchorCall.Method = property.Value.ToString();
+                    }
+                    else
+                    {
+                        resource.Source = JsonConvert.DeserializeObject<ResourceSource>(property.Value.ToString(), Converter.Settings);
+                    }
                     continue;
                 }
             }

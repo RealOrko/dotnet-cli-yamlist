@@ -68,10 +68,7 @@ namespace yamlist.Modules.IO.Json.Converters
                 
                 if (property.Name == "source")
                 {
-                    var resourceSourceType = typeof(ResourceTypeSource);
-                    var resourceSourceTypeReader = new JsonTextReader(new StringReader(property.Value?.ToString()));
-                    resourceType.Source = (ResourceTypeSource)(serializer.Deserialize(resourceSourceTypeReader, resourceSourceType));
-                    continue;
+                    resourceType.Source = JsonConvert.DeserializeObject<ResourceTypeSource>(property.Value.ToString(), Converter.Settings);
                 }
             }
             

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using yamlist.Modules.IO.Json.Model.Meta;
 
 namespace yamlist.Modules.IO.Json.Model
 {
@@ -15,5 +16,8 @@ namespace yamlist.Modules.IO.Json.Model
         
         [JsonProperty("source")]
         public ResourceSource Source { get; set; }
+
+        [JsonProperty("anchor_call")]
+        public AnchorCall SourceAnchorCall { get; set; }
     }
 }

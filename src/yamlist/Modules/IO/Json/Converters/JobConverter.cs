@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -98,10 +97,7 @@ namespace yamlist.Modules.IO.Json.Converters
                 
                 if (property.Name == "plan")
                 {
-                    job.Plan = new List<JobPlan>();
-                    var jobPlanObjectType = typeof(List<JobPlan>);
-                    var jobPlanJsonReader = new JsonTextReader(new StringReader(property.Value?.ToString()));
-                    job.Plan.AddRange(((List<JobPlan>)serializer.Deserialize(jobPlanJsonReader, jobPlanObjectType))!);
+                    job.Plan = JsonConvert.DeserializeObject<List<JobPlan>>(property.Value.ToString(), Converter.Settings);
                     continue;
                 }
 
