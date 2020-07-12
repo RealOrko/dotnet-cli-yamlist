@@ -32,49 +32,66 @@ namespace yamlist.Modules.IO.Yaml.Converters
                 MergeAnchorCall(ref currentLine, counter);
                 MergeAnchorDeclaration(ref currentLine, counter);
                 AnchorDeclaration(ref currentLine);
+                AnchorListDeclaration(ref currentLine);
                 AnchorCall(ref currentLine, counter);
             }
         }
 
         private static void AnchorDeclaration(ref string currentLine)
         {
-            var match = Regex.Match(currentLine, SymbolMapper.AnchorDeclaration.Forward.FindRegEx);
+            var anchorSymbol = SymbolMapper.AnchorDeclaration;
+            var match = Regex.Match(currentLine, anchorSymbol.Forward.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, SymbolMapper.AnchorDeclaration.Forward.FindRegEx, SymbolMapper.AnchorDeclaration.Forward.ReplaceWith);
+                currentLine = Regex.Replace(currentLine, anchorSymbol.Forward.FindRegEx, anchorSymbol.Forward.ReplaceWith);
                 currentLine = currentLine + ":";
+            }
+        }
+
+        private static void AnchorListDeclaration(ref string currentLine)
+        {
+            var anchorListSymbol = SymbolMapper.AnchorListDeclaration;
+            var match = Regex.Match(currentLine, anchorListSymbol.Forward.FindRegEx);
+            if (match.Success)
+            {
+                currentLine = currentLine.TrimEnd();
+                currentLine = Regex.Replace(currentLine, anchorListSymbol.Forward.FindRegEx, anchorListSymbol.Forward.ReplaceWith);
+                currentLine = currentLine + ": 1";
             }
         }
 
         private static void MergeAnchorDeclaration(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, SymbolMapper.MergeAnchorDeclaration.Forward.FindRegEx);
+            var mergeAnchorSymbol = SymbolMapper.MergeAnchorDeclaration;
+            var match = Regex.Match(currentLine, mergeAnchorSymbol.Forward.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, SymbolMapper.MergeAnchorDeclaration.Forward.FindRegEx, string.Format(SymbolMapper.MergeAnchorDeclaration.Forward.ReplaceWith, counter));
+                currentLine = Regex.Replace(currentLine, mergeAnchorSymbol.Forward.FindRegEx, string.Format(mergeAnchorSymbol.Forward.ReplaceWith, counter));
                 currentLine = currentLine + ":";
             }
         }
 
         private static void AnchorCall(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, SymbolMapper.AnchorCall.Forward.FindRegEx);
+            var anchorCallSymbol = SymbolMapper.AnchorCall;
+            var match = Regex.Match(currentLine, anchorCallSymbol.Forward.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, SymbolMapper.AnchorCall.Forward.FindRegEx, string.Format(SymbolMapper.AnchorCall.Forward.ReplaceWith, counter));
+                currentLine = Regex.Replace(currentLine, anchorCallSymbol.Forward.FindRegEx, string.Format(anchorCallSymbol.Forward.ReplaceWith, counter));
             }
         }
         
         private static void MergeAnchorCall(ref string currentLine, int counter)
         {
-            var match = Regex.Match(currentLine, SymbolMapper.MergeAnchorCall.Forward.FindRegEx);
+            var mergeAnchorCallSymbol = SymbolMapper.MergeAnchorCall;
+            var match = Regex.Match(currentLine, mergeAnchorCallSymbol.Forward.FindRegEx);
             if (match.Success)
             {
                 currentLine = currentLine.TrimEnd();
-                currentLine = Regex.Replace(currentLine, SymbolMapper.MergeAnchorCall.Forward.FindRegEx, string.Format(SymbolMapper.MergeAnchorCall.Forward.ReplaceWith, counter));
+                currentLine = Regex.Replace(currentLine, mergeAnchorCallSymbol.Forward.FindRegEx, string.Format(mergeAnchorCallSymbol.Forward.ReplaceWith, counter));
             }
         }
     }

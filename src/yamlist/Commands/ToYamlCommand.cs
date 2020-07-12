@@ -28,7 +28,7 @@ namespace yamlist.Commands
 
             if (args.Debug)
             {
-                var debugFile = Path.GetFileName(args.InputFile) + ".debug";
+                var debugFile = Path.GetFileName(args.InputFile) + ".toyaml.debug";
                 File.WriteAllText(debugFile, output);
             }
             

@@ -8,6 +8,12 @@ namespace yamlist.Modules.IO.Yaml.Converters
             @"(_anchor_decl_)", 
             ": &");
 
+        public static readonly SymbolMap AnchorListDeclaration = new SymbolMap(
+            @"(-\s*\&)", 
+            "- _anchor_list_decl_", 
+            @"(- _anchor_list_decl_)", 
+            "- &");
+
         public static readonly SymbolMap MergeAnchorDeclaration = new SymbolMap(
             @"(<<\s*:\s*\&)", 
             "_merge_anchor_decl_{0}_", 

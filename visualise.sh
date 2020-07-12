@@ -10,7 +10,7 @@ cp ../offline_cs_enterprise_archive/ci/deploy.yml ./build/d.yml
 pushd ./build
 
 # Testing the concourse serialisation
-./yi fmt -f d.yml > y.yml
+./yi fmt -f d.yml -d > y.yml
 
 # Testing the yaml to json conversion with the yaml symbol transformers
 #./yi json -f d.yml > j.json -d
