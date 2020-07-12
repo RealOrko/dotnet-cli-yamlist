@@ -15,12 +15,11 @@ namespace yamlist.Modules.IO.Json.Model
         public List<JobPlanConfigInputOutput> Outputs { get; set; }
         
         [JsonProperty("run")]
-        public JobPlanConfigRun Run { get; set; } 
-    }
+        public JobPlanConfigRun Run { get; set; }
 
-    public class JobPlanConfigInputOutput
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        public override string ToString()
+        {
+            return $"{nameof(Platform)}: {Platform}, {nameof(Inputs)}: {Inputs}, {nameof(Outputs)}: {Outputs}, {nameof(Run)}: {Run}";
+        }
     }
 }

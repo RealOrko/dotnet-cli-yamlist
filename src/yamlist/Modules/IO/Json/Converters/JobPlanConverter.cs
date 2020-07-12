@@ -331,74 +331,7 @@ namespace yamlist.Modules.IO.Json.Converters
             }
             
             writer.WritePropertyName("config");
-            writer.WriteStartObject();
-
-            writer.WritePropertyName("platform");
-            writer.WriteValue(jp.Config.Platform);
-
-            if (jp.Config.Inputs != null && jp.Config.Inputs.Count > 0)
-            {
-                writer.WritePropertyName("inputs");
-                
-                writer.WriteStartArray();
-
-                foreach (var configInput in jp.Config.Inputs)
-                {
-                    writer.WriteStartObject();
-                    
-                    writer.WritePropertyName("name");
-                    writer.WriteValue(configInput.Name);
-                    
-                    writer.WriteEndObject();
-                }
-                
-                writer.WriteEndArray();
-            }
-
-            if (jp.Config.Outputs != null && jp.Config.Outputs.Count > 0)
-            {
-                writer.WritePropertyName("outputs");
-                
-                writer.WriteStartArray();
-
-                foreach (var configInput in jp.Config.Outputs)
-                {
-                    writer.WriteStartObject();
-                    
-                    writer.WritePropertyName("name");
-                    writer.WriteValue(configInput.Name);
-                    
-                    writer.WriteEndObject();
-                }
-                
-                writer.WriteEndArray();
-            }
-
-            if (jp.Config.Run != null)
-            {
-                writer.WritePropertyName("run");
-                writer.WriteStartObject();
-
-                writer.WritePropertyName("path");
-                writer.WriteValue(jp.Config.Run.Path);
-
-                if (jp.Config.Run.Args != null && jp.Config.Run.Args.Count > 0)
-                {
-                    writer.WritePropertyName("args");
-                    writer.WriteStartArray();
-
-                    foreach (var arg in jp.Config.Run.Args)
-                    {
-                        writer.WriteValue(arg);
-                    }
-
-                    writer.WriteEndArray();
-                }
-
-                writer.WriteEndObject();
-            }
-
-            writer.WriteEndObject();
+            
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -480,7 +413,7 @@ namespace yamlist.Modules.IO.Json.Converters
                     }
                     else
                     {
-                        jobPlan.Config = JsonConvert.DeserializeObject<JobPlanConfig>(property.Value.ToString());
+                        jobPlan.Config = JsonConvert.DeserializeObject<JobPlanConfig>(property.Value.ToString(), Converter.Settings);
                     }
                     continue;
                 }

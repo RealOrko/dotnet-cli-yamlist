@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using yamlist.Modules.IO.Json.Converters;
 using yamlist.Modules.IO.Json.Model;
-using yamlist.Modules.IO.Json.Model.Meta;
 using yamlist.Modules.IO.Json.Resolvers;
 
 namespace yamlist.Modules.IO.Json
@@ -16,6 +15,9 @@ namespace yamlist.Modules.IO.Json
                 typeof(Job),
                 typeof(JobPlan),
                 typeof(JobPlanEnsure),
+                typeof(JobPlanConfig),
+                typeof(JobPlanConfigRun),
+                typeof(JobPlanConfigInputOutput),
                 typeof(Resource),
                 typeof(ResourceSource),
                 typeof(ResourceType),
@@ -26,6 +28,9 @@ namespace yamlist.Modules.IO.Json
             {
                 new JobConverter(),
                 new JobPlanConverter(),
+                new JobPlanConfigConverter(),
+                new JobPlanConfigRunConverter(),
+                new JobPlanConfigInputOutputConverter(),
                 new ResourceConverter(),
                 new ResourceSourceConverter(),
                 new ResourceTypeConverter(),
