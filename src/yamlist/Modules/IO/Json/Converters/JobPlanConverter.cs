@@ -38,6 +38,12 @@ namespace yamlist.Modules.IO.Json.Converters
             }
             
             writer.WriteStartObject();
+
+            if (jp.TaskAnchorDeclaration != null)
+            {
+                writer.WritePropertyName(jp.TaskAnchorDeclaration.Method);
+                writer.WriteValue(1);
+            }
             
             if (jp.InParallel != null && jp.InParallel.Count > 0)
             {
@@ -419,6 +425,12 @@ namespace yamlist.Modules.IO.Json.Converters
 
             foreach (var property in jObject.Properties())
             {
+                if (property.Name.StartsWith("_anchor_list_decl"))
+                {
+                    jobPlan.TaskAnchorDeclaration = new AnchorDeclaration();
+                    jobPlan.TaskAnchorDeclaration.Method = property.Name;
+                }
+                
                 if (property.Name == "in_parallel")
                 {
                     var stepsFound = false;

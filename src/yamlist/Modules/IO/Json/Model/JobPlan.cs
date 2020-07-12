@@ -78,7 +78,11 @@ namespace yamlist.Modules.IO.Json.Model
         [JsonProperty("anchor_call")]
         public AnchorCall AnchorCall { get; set; }
 
+        [JsonProperty("config_anchor_call")]
         public AnchorCall ConfigAnchorCall { get; set; }
+        
+        [JsonProperty("task_anchor_declaration")]
+        public AnchorDeclaration TaskAnchorDeclaration { get; set; }
 
 
         public override string ToString()
