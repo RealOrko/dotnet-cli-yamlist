@@ -24,11 +24,17 @@ namespace yamlist.Modules.IO.Json.Converters
             {
                 writer.WriteStartObject();
 
-                writer.WritePropertyName("name");
-                writer.WriteValue(jpci.Name);
+                if (!string.IsNullOrEmpty(jpci.Name))
+                {
+                    writer.WritePropertyName("name");
+                    writer.WriteValue(jpci.Name);
+                }
 
-                writer.WritePropertyName("value");
-                writer.WriteValue(jpci.Value);
+                if (!string.IsNullOrEmpty(jpci.Value))
+                {
+                    writer.WritePropertyName("value");
+                    writer.WriteValue(jpci.Value);
+                }
 
                 writer.WriteEndObject();
             }

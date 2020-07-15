@@ -39,6 +39,11 @@ namespace yamlist.Modules.IO.Json.Converters
             
             writer.WriteStartObject();
 
+            if (jp.Task == "load_properties")
+            {
+                "".ToString();
+            }
+            
             if (jp.TaskAnchorDeclaration != null)
             {
                 writer.WritePropertyName(jp.TaskAnchorDeclaration.Method);
@@ -331,7 +336,37 @@ namespace yamlist.Modules.IO.Json.Converters
             }
             
             writer.WritePropertyName("config");
+            writer.WriteStartObject();
+
+            if (!string.IsNullOrEmpty(jp.Config.Platform))
+            {
+                writer.WritePropertyName("platform");
+                writer.WriteValue(jp.Config.Platform);
+            }
+
+            if (jp.Config.Inputs != null && jp.Config.Inputs.Count > 0)
+            {
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                JsonConvert.SerializeObject(jp.Config.Inputs, Converter.Settings);
+                writer.WriteEndArray();
+            }
+
+            if (jp.Config.Outputs != null && jp.Config.Outputs.Count > 0)
+            {
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                JsonConvert.SerializeObject(jp.Config.Outputs, Converter.Settings);
+                writer.WriteEndArray();
+            }
+
+            if (jp.Config.Run != null)
+            {
+                writer.WritePropertyName("run");
+                JsonConvert.SerializeObject(jp.Config.Run, Converter.Settings);
+            }
             
+            writer.WriteEndObject();
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
