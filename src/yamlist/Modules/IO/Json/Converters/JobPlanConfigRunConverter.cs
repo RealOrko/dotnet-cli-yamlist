@@ -33,7 +33,10 @@ namespace yamlist.Modules.IO.Json.Converters
                     writer.WritePropertyName("args");
                     writer.WriteStartArray();
 
-                    foreach (var arg in jpcr.Args) writer.WriteValue(arg);
+                    foreach (var arg in jpcr.Args)
+                    {
+                        writer.WriteValue(arg);
+                    }
 
                     writer.WriteEndArray();
                 }

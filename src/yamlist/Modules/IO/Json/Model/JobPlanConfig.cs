@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using yamlist.Modules.IO.Json.Model.Meta;
 
 namespace yamlist.Modules.IO.Json.Model
 {
@@ -16,6 +17,12 @@ namespace yamlist.Modules.IO.Json.Model
         
         [JsonProperty("run")]
         public JobPlanConfigRun Run { get; set; }
+        
+        [JsonProperty("params")]
+        public Dictionary<string, dynamic> Params { get; set; }
+
+        [JsonProperty("params_anchor")]
+        public AnchorDeclaration ParamsAnchorDeclaration { get; set; }
 
         public override string ToString()
         {

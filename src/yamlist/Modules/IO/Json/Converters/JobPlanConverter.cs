@@ -25,11 +25,11 @@ namespace yamlist.Modules.IO.Json.Converters
         {
             if (value is JobPlan jp)
             {
-                WriteJobPlan(writer, jp);
+                WriteJobPlan(writer, serializer, jp);
             }
         }
 
-        private static void WriteJobPlan(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlan(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             if (jp.AnchorCall != null)
             {
@@ -39,11 +39,6 @@ namespace yamlist.Modules.IO.Json.Converters
             
             writer.WriteStartObject();
 
-            if (jp.Task == "load_properties")
-            {
-                "".ToString();
-            }
-            
             if (jp.TaskAnchorDeclaration != null)
             {
                 writer.WritePropertyName(jp.TaskAnchorDeclaration.Method);
@@ -56,7 +51,7 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteStartArray();
                 foreach (var jpp in jp.InParallel)
                 {
-                    WriteJobPlan(writer, jpp);
+                    WriteJobPlan(writer, serializer, jpp);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +62,7 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteStartArray();
                 foreach (var jpp in jp.Do)
                 {
-                    WriteJobPlan(writer, jpp);
+                    WriteJobPlan(writer, serializer, jpp);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +70,7 @@ namespace yamlist.Modules.IO.Json.Converters
             if (jp.Try != null)
             {
                 writer.WritePropertyName("try");
-                WriteJobPlan(writer, jp.Try);
+                WriteJobPlan(writer, serializer, jp.Try);
             }
                 
             if (!string.IsNullOrEmpty(jp.SetPipeline))
@@ -104,7 +99,7 @@ namespace yamlist.Modules.IO.Json.Converters
 
             if (jp.Config != null)
             {
-                WriteJobPlanConfig(writer, jp);
+                WriteJobPlanConfig(writer, serializer, jp);
             }
 
             if (!string.IsNullOrEmpty(jp.Get))
@@ -125,10 +120,10 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteValue(jp.Resource);
             }
 
-            if (jp.Trigger == "true")
+            if (!string.IsNullOrEmpty(jp.Trigger))
             {
                 writer.WritePropertyName("trigger");
-                writer.WriteValue("true");
+                writer.WriteValue(jp.Trigger);
             }
 
             if (jp.Attempts > 0)
@@ -171,38 +166,38 @@ namespace yamlist.Modules.IO.Json.Converters
 
             if (jp.Params != null && jp.Params.Count > 0)
             {
-                WriteJobPlanParams(writer, jp);
+                WriteJobPlanParams(writer, serializer, jp);
             }
             
             if (jp.InputMapping != null && jp.InputMapping.Count > 0)
             {
-                WriteJobPlanInputMapping(writer, jp);
+                WriteJobPlanInputMapping(writer, serializer, jp);
             }
 
             if (jp.OutputMapping != null && jp.OutputMapping.Count > 0)
             {
-                WriteJobPlanOutputMapping(writer, jp);
+                WriteJobPlanOutputMapping(writer, serializer, jp);
             }
             
             if (jp.GetParams != null && jp.GetParams.Count > 0)
             {
-                WriteJobPlanGetParams(writer, jp);
+                WriteJobPlanGetParams(writer, serializer, jp);
             }
             
             if (jp.PutParams != null && jp.PutParams.Count > 0)
             {
-                WriteJobPlanPutParams(writer, jp);
+                WriteJobPlanPutParams(writer, serializer, jp);
             }
             
             if (jp.Ensure != null)
             {
-                WriteJobPlanEnsure(writer, jp);
+                WriteJobPlanEnsure(writer, serializer, jp);
             }
             
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanEnsure(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanEnsure(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("ensure");
 
@@ -212,11 +207,11 @@ namespace yamlist.Modules.IO.Json.Converters
             }
             else
             {
-                WriteJobPlan(writer, jp.Ensure);
+                WriteJobPlan(writer, serializer, jp.Ensure);
             }
         }
 
-        private static void WriteJobPlanPutParams(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanPutParams(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("put_params");
             writer.WriteStartObject();
@@ -241,7 +236,7 @@ namespace yamlist.Modules.IO.Json.Converters
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanGetParams(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanGetParams(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("get_params");
             writer.WriteStartObject();
@@ -266,7 +261,7 @@ namespace yamlist.Modules.IO.Json.Converters
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanOutputMapping(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanOutputMapping(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("output_mapping");
             writer.WriteStartObject();
@@ -280,7 +275,7 @@ namespace yamlist.Modules.IO.Json.Converters
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanInputMapping(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanInputMapping(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("input_mapping");
             writer.WriteStartObject();
@@ -294,7 +289,7 @@ namespace yamlist.Modules.IO.Json.Converters
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanParams(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanParams(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             writer.WritePropertyName("params");
             writer.WriteStartObject();
@@ -326,7 +321,7 @@ namespace yamlist.Modules.IO.Json.Converters
             writer.WriteEndObject();
         }
 
-        private static void WriteJobPlanConfig(JsonWriter writer, JobPlan jp)
+        private static void WriteJobPlanConfig(JsonWriter writer, JsonSerializer serializer, JobPlan jp)
         {
             if (jp.ConfigAnchorCall != null)
             {
@@ -334,39 +329,17 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteValue(jp.ConfigAnchorCall.Method);
                 return;
             }
-            
-            writer.WritePropertyName("config");
-            writer.WriteStartObject();
 
-            if (!string.IsNullOrEmpty(jp.Config.Platform))
+            if (jp.ConfigAnchorDeclaration != null)
             {
-                writer.WritePropertyName("platform");
-                writer.WriteValue(jp.Config.Platform);
+                writer.WritePropertyName(jp.ConfigAnchorDeclaration.Method);                
             }
-
-            if (jp.Config.Inputs != null && jp.Config.Inputs.Count > 0)
+            else
             {
-                writer.WritePropertyName("inputs");
-                writer.WriteStartArray();
-                JsonConvert.SerializeObject(jp.Config.Inputs, Converter.Settings);
-                writer.WriteEndArray();
-            }
-
-            if (jp.Config.Outputs != null && jp.Config.Outputs.Count > 0)
-            {
-                writer.WritePropertyName("outputs");
-                writer.WriteStartArray();
-                JsonConvert.SerializeObject(jp.Config.Outputs, Converter.Settings);
-                writer.WriteEndArray();
-            }
-
-            if (jp.Config.Run != null)
-            {
-                writer.WritePropertyName("run");
-                JsonConvert.SerializeObject(jp.Config.Run, Converter.Settings);
+                writer.WritePropertyName("config");
             }
             
-            writer.WriteEndObject();
+            serializer.Serialize(writer, jp.Config, typeof(JobPlanConfig));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -438,7 +411,7 @@ namespace yamlist.Modules.IO.Json.Converters
                     jobPlan.Task = property.Value?.ToString();
                     continue;
                 }
-                
+
                 if (property.Name == "config")
                 {
                     if (property.Value.ToString().StartsWith("_anchor_call"))
@@ -453,6 +426,13 @@ namespace yamlist.Modules.IO.Json.Converters
                     continue;
                 }
 
+                if (property.Name.StartsWith("config_anchor_decl_"))
+                {
+                    jobPlan.ConfigAnchorDeclaration = new AnchorDeclaration();
+                    jobPlan.ConfigAnchorDeclaration.Method = property.Name;
+                    jobPlan.Config = JsonConvert.DeserializeObject<JobPlanConfig>(property.Value.ToString(), Converter.Settings);
+                }
+                
                 if (property.Name == "set_pipeline")
                 {
                     jobPlan.SetPipeline = property.Value.ToString();
@@ -524,12 +504,6 @@ namespace yamlist.Modules.IO.Json.Converters
                 if (property.Name == "file")
                 {
                     jobPlan.File = property.Value?.ToString();
-
-                    if (jobPlan.File.Contains("app-metrics"))
-                    {
-                        "".ToString();
-                    }
-                    
                     continue;
                 }
                 

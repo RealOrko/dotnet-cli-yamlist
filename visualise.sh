@@ -15,6 +15,6 @@ pushd ./build
 # Testing the yaml to json conversion with the yaml symbol transformers
 #./yi json -f d.yml > j.json -d
 #./yi yaml -f j.json > y.yml -d
-fly validate-pipeline -c y.yml
+#fly validate-pipeline -c y.yml
 meld d.yml y.yml
 popd

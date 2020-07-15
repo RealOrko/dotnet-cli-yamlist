@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using yamlist.Modules.IO.Json.Model;
+using yamlist.Modules.IO.Json.Model.Meta;
 
 namespace yamlist.Modules.IO.Json.Converters
 {
@@ -27,20 +28,21 @@ namespace yamlist.Modules.IO.Json.Converters
             {
                 writer.WriteStartObject();
 
-                writer.WritePropertyName("platform");
-                writer.WriteValue(jpc.Platform);
+                if (!string.IsNullOrEmpty(jpc.Platform))
+                {
+                    writer.WritePropertyName("platform");
+                    writer.WriteValue(jpc.Platform);
+                }
 
                 if (jpc.Inputs != null && jpc.Inputs.Count > 0)
                 {
                     writer.WritePropertyName("inputs");
 
                     writer.WriteStartArray();
-
                     foreach (var configInput in jpc.Inputs)
                     {
-                        JsonConvert.SerializeObject(configInput, Converter.Settings);
+                        serializer.Serialize(writer, configInput, typeof(JobPlanConfigInputOutput));
                     }
-
                     writer.WriteEndArray();
                 }
 
@@ -49,19 +51,31 @@ namespace yamlist.Modules.IO.Json.Converters
                     writer.WritePropertyName("outputs");
 
                     writer.WriteStartArray();
-
                     foreach (var configOutput in jpc.Outputs)
                     {
-                        JsonConvert.SerializeObject(configOutput, Converter.Settings);
+                        serializer.Serialize(writer, configOutput, typeof(JobPlanConfigInputOutput));
+                    }
+                    writer.WriteEndArray();
+                }
+
+                if (jpc.Params != null && jpc.Params.Count > 0)
+                {
+                    if (jpc.ParamsAnchorDeclaration != null)
+                    {
+                        writer.WritePropertyName(jpc.ParamsAnchorDeclaration.Method);
+                    }
+                    else
+                    {
+                        writer.WritePropertyName("params");
                     }
 
-                    writer.WriteEndArray();
+                    serializer.Serialize(writer, jpc.Params);
                 }
 
                 if (jpc.Run != null)
                 {
                     writer.WritePropertyName("run");
-                    JsonConvert.SerializeObject(jpc.Run, Converter.Settings);
+                    serializer.Serialize(writer, jpc.Run, typeof(JobPlanConfigRun));
                 }
 
                 writer.WriteEndObject();
@@ -76,16 +90,39 @@ namespace yamlist.Modules.IO.Json.Converters
 
             foreach (var property in jObject.Properties())
             {
-                if (property.Name == "platform") jobPlanConfig.Platform = property.Value.ToString();
+                if (property.Name == "platform")
+                {
+                    jobPlanConfig.Platform = property.Value.ToString();
+                }
 
                 if (property.Name == "inputs")
+                {
                     jobPlanConfig.Inputs = JsonConvert.DeserializeObject<List<JobPlanConfigInputOutput>>(property.Value.ToString(), Converter.Settings);
+                }
 
-                if (property.Name == "outputs")
+                if (property.Name == "outputs") 
+                {
                     jobPlanConfig.Outputs = JsonConvert.DeserializeObject<List<JobPlanConfigInputOutput>>(property.Value.ToString(), Converter.Settings);
+                }
 
                 if (property.Name == "run")
+                {
                     jobPlanConfig.Run = JsonConvert.DeserializeObject<JobPlanConfigRun>(property.Value.ToString(), Converter.Settings);
+                }
+                
+                if (property.Name == "params")
+                {
+                    jobPlanConfig.Params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
+                    continue;
+                }
+                
+                if (property.Name.StartsWith("params_anchor_decl_"))
+                {
+                    jobPlanConfig.ParamsAnchorDeclaration = new AnchorDeclaration();
+                    jobPlanConfig.ParamsAnchorDeclaration.Method = property.Name;
+                    jobPlanConfig.Params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
+                }
+
             }
 
             return jobPlanConfig;
