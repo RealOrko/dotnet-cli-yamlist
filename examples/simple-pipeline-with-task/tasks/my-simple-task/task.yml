@@ -1,0 +1,12 @@
+platform: linux
+
+inputs:
+  - name: dotnet-cli-yamilst
+
+params:
+  HELLO_WORLD:
+
+run:
+  path: /bin/bash
+  args:
+    - "dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.sh"
