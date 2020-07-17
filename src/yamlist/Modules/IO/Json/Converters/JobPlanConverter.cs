@@ -97,11 +97,6 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteValue(jp.Image);
             }
 
-            if (jp.Config != null)
-            {
-                WriteJobPlanConfig(writer, serializer, jp);
-            }
-
             if (!string.IsNullOrEmpty(jp.Get))
             {
                 writer.WritePropertyName("get");
@@ -164,14 +159,19 @@ namespace yamlist.Modules.IO.Json.Converters
                 writer.WriteEndArray();
             }
 
+            if (jp.InputMapping != null && jp.InputMapping.Count > 0)
+            {
+                WriteJobPlanInputMapping(writer, serializer, jp);
+            }
+
             if (jp.Params != null && jp.Params.Count > 0)
             {
                 WriteJobPlanParams(writer, serializer, jp);
             }
             
-            if (jp.InputMapping != null && jp.InputMapping.Count > 0)
+            if (jp.Config != null || jp.ConfigAnchorCall != null || jp.ConfigAnchorDeclaration != null)
             {
-                WriteJobPlanInputMapping(writer, serializer, jp);
+                WriteJobPlanConfig(writer, serializer, jp);
             }
 
             if (jp.OutputMapping != null && jp.OutputMapping.Count > 0)
