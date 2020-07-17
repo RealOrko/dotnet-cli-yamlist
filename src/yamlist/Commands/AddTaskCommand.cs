@@ -16,10 +16,12 @@ namespace yamlist.Commands
 
         public Context Context { get; }
 
-        public int Execute(FormatArguments args)
+        public int Execute(AddTaskArguments args)
         {
             var input = File.ReadAllText(args.InputFile);
             var concourse = Converter.ToConcourse(input, args.InputFile, args.Debug);
+            
+            
             
             Console.WriteLine("Wheeee!");
             
