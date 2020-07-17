@@ -23,4 +23,3 @@ resources:
   type: registry-image
   source:
     repository: docker.io/ubuntu
-
