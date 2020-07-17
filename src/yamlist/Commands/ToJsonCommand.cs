@@ -1,11 +1,8 @@
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Attributes;
-using yamlist.Modules.IO.Yaml;
-using yamlist.Modules.IO.Yaml.Converters;
-using Converter = yamlist.Modules.IO.Json.Converter;
+using yamlist.Modules.IO;
 
 namespace yamlist.Commands
 {
@@ -17,24 +14,13 @@ namespace yamlist.Commands
             Context = context;
         }
 
-        public string Input { get; set; }
-        public StringWriter Out { get; set; }
         public Context Context { get; }
 
         public int Execute(ToJsonArguments args)
         {
-            var input = Input ?? File.ReadAllText(args.InputFile);
-            var output = ForwardConverter.Convert(input);
-
-            if (args.Debug)
-            {
-                var debugFile = Path.GetFileName(args.InputFile) + ".tojson.debug";
-                File.WriteAllText(debugFile, output);
-            }
-            
-            var json = Modules.IO.Yaml.Converter.ToJson(output);
-            json = Converter.Format(json);
-            (Out ?? Console.Out).WriteLine(json);
+            var input = File.ReadAllText(args.InputFile);
+            var json = Converter.YamlToJson(input, args.InputFile, args.Debug);
+            Console.WriteLine(json);
             return 0;
         }
     }
