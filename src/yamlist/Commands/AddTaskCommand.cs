@@ -6,10 +6,10 @@ using yamlist.Modules.IO;
 
 namespace yamlist.Commands
 {
-    [Binds(typeof(FormatArguments))]
-    public class FormatCommand
+    [Binds(typeof(AddTaskArguments))]
+    public class AddTaskCommand
     {
-        public FormatCommand(Context context)
+        public AddTaskCommand(Context context)
         {
             Context = context;
         }
@@ -19,9 +19,12 @@ namespace yamlist.Commands
         public int Execute(FormatArguments args)
         {
             var input = File.ReadAllText(args.InputFile);
-            var concourse = Converter.ConcourseFormat(input, args.InputFile, args.Debug);
-            Console.WriteLine(concourse);
+            var concourse = Converter.ToConcourse(input, args.InputFile, args.Debug);
+            
+            Console.WriteLine("Wheeee!");
+            
             return 0;
         }
+
     }
 }

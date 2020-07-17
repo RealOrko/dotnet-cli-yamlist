@@ -1,4 +1,5 @@
 using System.IO;
+using yamlist.Modules.IO.Json.Model;
 using yamlist.Modules.IO.Yaml.Converters;
 
 namespace yamlist.Modules.IO
@@ -19,6 +20,13 @@ namespace yamlist.Modules.IO
             var yaml = JsonToYaml(concourseJson, inputFile, debug);
             yaml = FormatConcourseOut(yaml);
             return yaml;
+        }
+
+        public static Pipeline ToConcourse(string input, string inputFile, bool debug)
+        {
+            var json = YamlToJson(input, inputFile, debug);
+            var pipeline = Json.Converter.JsonToConcourse(json);
+            return pipeline;
         }
         
         public static string YamlToJson(string input, string inputFile, bool debug)
