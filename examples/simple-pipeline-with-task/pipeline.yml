@@ -22,5 +22,5 @@ resources:
 - name: ubuntu-image
   type: registry-image
   source:
-    repository: registry.hub.docker.com/ubuntu
+    repository: docker.io/ubuntu
 
