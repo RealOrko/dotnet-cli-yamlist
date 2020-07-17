@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Microsoft.VisualBasic.CompilerServices;
 using yamlist.Modules.Commands;
 using yamlist.Modules.Commands.Attributes;
 
@@ -64,8 +63,6 @@ namespace yamlist.Commands
                 line = stringReader.ReadLine();
             }
             
-            Console.WriteLine(yamlWriter.ToString());
-
             return 0;
         }
 
