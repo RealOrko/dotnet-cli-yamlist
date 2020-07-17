@@ -69,7 +69,7 @@ namespace yamlist.Modules.IO.Json.Converters
 
                 if (p.ResourceTypes != null && p.ResourceTypes.Count > 0)
                 {
-                    writer.WritePropertyName("resources_types");
+                    writer.WritePropertyName("resource_types");
                     writer.WriteStartArray();
                     foreach (var a in p.ResourceTypes)
                     {
