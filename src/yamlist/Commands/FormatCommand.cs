@@ -25,33 +25,38 @@ namespace yamlist.Commands
 
             while (line != null)
             {
-                if (line.TrimStart().StartsWith("anchors:"))
+                if (line.StartsWith("anchors:"))
                 {
                     cursor.MarkAnchors();
                     Console.WriteLine();
                 }
                 
-                if (line.TrimStart().StartsWith("groups:"))
+                if (line.StartsWith("groups:"))
                 {
                     cursor.MarkGroups();
                     Console.WriteLine();
                 }
                 
-                if (line.TrimStart().StartsWith("jobs:"))
+                if (line.StartsWith("jobs:"))
                 {
                     cursor.MarkJobs();
                     Console.WriteLine();
                 }
                 
-                if (line.TrimStart().StartsWith("resources:"))
+                if (line.StartsWith("resources:"))
                 {
                     cursor.MarkResources();
                     Console.WriteLine();
                 }
                 
-                if (line.TrimStart().StartsWith("resource_types:"))
+                if (line.StartsWith("resource_types:"))
                 {
                     cursor.MarkResourceTypes();
+                    Console.WriteLine();
+                }
+
+                if (line.StartsWith("- name:"))
+                {
                     Console.WriteLine();
                 }
 
