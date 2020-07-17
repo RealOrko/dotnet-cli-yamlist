@@ -26,7 +26,7 @@ namespace yamlist.Commands
 
             if (args.Debug)
             {
-                File.WriteAllText($"{Path.GetFileName(args.InputFile)}.concourse.debug", concourseJson);
+                File.WriteAllText($"{Path.GetFileName(args.InputFile)}.concoursetojson.debug", concourseJson);
             }
 
             var yamlWriter = new StringWriter();
