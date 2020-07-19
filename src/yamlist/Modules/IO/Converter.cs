@@ -18,7 +18,19 @@ namespace yamlist.Modules.IO
             }
 
             var yaml = JsonToYaml(concourseJson, inputFile, debug);
-            yaml = FormatConcourseOut(yaml);
+            return yaml;
+        }
+
+        public static string PipelineToYaml(Pipeline pipeline, string inputFile, bool debug)
+        {
+            var concourseJson = Json.Converter.ConcourseToJson(pipeline);
+
+            if (debug)
+            {
+                File.WriteAllText($"{Path.GetFileName(inputFile)}.concoursetojson.debug", concourseJson);
+            }
+
+            var yaml = JsonToYaml(concourseJson, inputFile, debug);
             return yaml;
         }
 
@@ -55,6 +67,7 @@ namespace yamlist.Modules.IO
             }
 
             var yaml = ReverseConverter.Convert(output);
+            yaml = FormatConcourseOut(yaml);
             return yaml;
         }
         
