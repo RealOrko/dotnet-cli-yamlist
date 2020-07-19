@@ -7,6 +7,6 @@
 fly --target local-dev login -n main -c http://localhost:8080/ -u test -p test
 fly -t local-dev sync
 fly -t local-dev validate-pipeline -c ./pipeline.yml
-fly -t local-dev set-pipeline -p local-dev -c ./pipeline.yml
-fly -t local-dev unpause-pipeline -p local-dev
-fly -t local-dev trigger-job -j local-dev/my-simple-job
+fly -t local-dev set-pipeline -p simple-job -c ./pipeline.yml
+fly -t local-dev unpause-pipeline -p simple-job
+fly -t local-dev trigger-job -j simple-job/my-simple-job
