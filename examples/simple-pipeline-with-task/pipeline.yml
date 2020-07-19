@@ -1,7 +1,7 @@
 
 jobs:
 
-- name: my-simple-job
+- name: my-simple-job-with-task
   plan:
   - get: ubuntu-image
   - get: dotnet-cli-yamilst
