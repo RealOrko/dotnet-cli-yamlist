@@ -6,7 +6,7 @@ jobs:
   - get: ubuntu-image
   - get: dotnet-cli-yamilst
   - task: my-simple-task
-    file: dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.yml
+    file: examples/simple-pipeline-with-task/tasks/task.yml
     image: ubuntu-image
     inputs: 
       - name: dotnet-cli-yamilst
