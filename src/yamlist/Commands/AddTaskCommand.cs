@@ -26,7 +26,7 @@ namespace yamlist.Commands
 
             var job = FindOrCreateJob(pipeline, args.JobName, args.TaskName, args.TasksFolder);
             
-            Console.WriteLine("Wheeee!");
+            
             
             return 0;
         }
