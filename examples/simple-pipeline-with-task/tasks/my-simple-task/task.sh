@@ -2,4 +2,3 @@
 
 echo $HELLO_WORLD
 
-exit 1
