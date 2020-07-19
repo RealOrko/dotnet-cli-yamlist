@@ -14,13 +14,13 @@ yi addjob
       The path to the concourse yaml file eg. -f ~/code/mypipeline/ci/deploy.yml
 
    -jobname or -jn
-      The job name to insert the task into (if not supplied 'my-new-job') eg. -jn my-pre-existing-job-name
+      The job name to insert eg. -jn my-new-job
 
    -taskname or -tn
-      The name of the new task (if not supplied 'my-new-task' is assumed) eg. -tn hello-world 
+      The name of the new task eg. -tn my-new-task 
 
    -taskfolder or -tf
-      The for where the new task file is created (if not supplied './tasks' is assumed relative to pipeline) eg. -tf ~/code/mypipeline/ci/tasks
+      The folder for where the new task file eg. -tf ~/code/mypipeline/ci/tasks
 
    -groupname or -gn
       The group name for the new job eg. -gn all
