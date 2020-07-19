@@ -39,6 +39,7 @@ Available commands are:
  - [`fmt`](https://github.com/RealOrko/dotnet-cli-yamlist/blob/master/docs/fmt.md)
  - [`tojson`](https://github.com/RealOrko/dotnet-cli-yamlist/blob/master/docs/tojson.md)
  - [`toyaml`](https://github.com/RealOrko/dotnet-cli-yamlist/blob/master/docs/toyaml.md)
+ - [`addjob`](https://github.com/RealOrko/dotnet-cli-yamlist/blob/master/docs/addjob.md)
 
 ## Uninstall
 

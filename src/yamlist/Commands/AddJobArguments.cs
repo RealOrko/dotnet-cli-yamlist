@@ -15,7 +15,13 @@ namespace yamlist.Commands
         public string TaskName { get; set; } = "my-new-task";
         
         [Argument(ShortName = "-tf", LongName = "-taskfolder", Help = "The for where the new task file is created (if not supplied './tasks' is assumed relative to pipeline) eg. -tf ~/code/mypipeline/ci/tasks")]
-        public string TasksFolder { get; set; } = "tasks";
+        public string TasksFolder { get; set; }
+
+        [Argument(ShortName = "-gn", LongName = "-groupname", Help = "The group name for the new job eg. -gn all")]
+        public string GroupName { get; set; } = "all";
+
+        [Argument(ShortName = "-rn", LongName = "-resourcename", Help = "The resource name for the new job eg. -rn my-source-git")]
+        public string ResourceName { get; set; } = "my-source-git";
 
         [Argument(ShortName = "-d", LongName = "-debug", Help = "To debug output eg -d")]
         public bool Debug { get; set; }

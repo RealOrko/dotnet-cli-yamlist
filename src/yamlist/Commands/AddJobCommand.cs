@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,11 +22,18 @@ namespace yamlist.Commands
         {
             var pipeline = FindOrCreatePipeline(args.InputFile, args.Debug);
             var jobCount = FindExistingJobCount(pipeline, args.JobName);
+
+            if (args.TasksFolder == null)
+            {
+                args.TasksFolder = $"{Path.GetDirectoryName(args.InputFile)}/tasks";
+            }
+            
             args.JobName = $"{args.JobName}-{jobCount}";
             args.TaskName = $"{args.TaskName}-{jobCount}";
-            
-            FindOrCreateJob(pipeline, args.JobName, args.TaskName, args.TasksFolder);
-            FindOrCreateGitResource(pipeline);
+
+            FindOrCreateJobGroup(pipeline, args.JobName, args.GroupName);
+            FindOrCreateJob(pipeline, args.JobName, args.TaskName, args.TasksFolder, args.ResourceName);
+            FindOrCreateGitResource(pipeline, args.ResourceName);
             FindOrCreateUbuntuResource(pipeline);
 
             if (!Directory.Exists(args.TasksFolder))
@@ -46,7 +52,7 @@ namespace yamlist.Commands
 platform: linux
 
 inputs:
-  - name: my-source-git
+  - name: {args.ResourceName}
 
 params:
   HELLO_WORLD:
@@ -54,7 +60,7 @@ params:
 run:
   path: bash
   args:
-    - ""my-source-git/{args.TasksFolder}/{args.TaskName}/task.sh""
+    - ""{args.ResourceName}/{args.TasksFolder}/{args.TaskName}/task.sh""
 ");
             }
 
@@ -71,6 +77,32 @@ echo $HELLO_WORLD
             File.WriteAllText(args.InputFile, yaml);
             
             return 0;
+        }
+
+        private void FindOrCreateJobGroup(Pipeline pipeline, string jobName, string groupName)
+        {
+            if (pipeline.Groups == null)
+            {
+                pipeline.Groups = new List<Group>();
+            }
+
+            if (!pipeline.Groups.Any(x => x.Name == groupName))
+            {
+                pipeline.Groups.Add(new Group()
+                {
+                    Name = groupName,
+                    Jobs = new List<string>()
+                });
+            }
+
+            var allGroup = pipeline.Groups.First(x => x.Name == groupName);
+
+            if (allGroup.Jobs == null)
+            {
+                allGroup.Jobs = new List<string>();
+            }
+            
+            allGroup.Jobs.Add(jobName);
         }
 
         private Pipeline FindOrCreatePipeline(string inputFile, bool debug)
@@ -96,7 +128,7 @@ echo $HELLO_WORLD
             return existingJobCount;
         }
 
-        private void FindOrCreateJob(Pipeline pipeline, string jobName, string taskName, string taskFolder)
+        private void FindOrCreateJob(Pipeline pipeline, string jobName, string taskName, string taskFolder, string resourceName)
         {
             var newOrExistingjob = pipeline.Jobs.FirstOrDefault(x => x.Name == jobName);
 
@@ -117,12 +149,12 @@ echo $HELLO_WORLD
                     },
                     new JobPlan()
                     {
-                        Get = "my-source-git"
+                        Get = resourceName
                     },
                     new JobPlan()
                     {
                         Task = taskName,
-                        File = Path.Combine("my-source-git", taskFolder, taskName, $"{taskName}.yml"),
+                        File = Path.Combine(resourceName, taskFolder, taskName, $"{taskName}.yml"),
                         Image = "ubuntu-image",
                         Params = new Dictionary<string, dynamic>()
                         {
@@ -135,19 +167,19 @@ echo $HELLO_WORLD
             pipeline.Jobs.Add(newJob);
         }
 
-        private void FindOrCreateGitResource(Pipeline pipeline)
+        private void FindOrCreateGitResource(Pipeline pipeline, string resourceName)
         {
-            var newOrExistingGitResource = pipeline.Resources.FirstOrDefault(x => x.Name == "my-source-git");
+            var newOrExistingGitResource = pipeline.Resources.FirstOrDefault(x => x.Name == resourceName);
             if (newOrExistingGitResource == null)
             {
                 var newResource = new Resource()
                 {
-                    Name = "my-source-git",
+                    Name = resourceName,
                     Type = "git",
                     Source = new ResourceSource()
                     {
                         { "branch", "master" },
-                        { "uri", "https://github.com/my-name/my-source-git.git" }
+                        { "uri", $"https://github.com/my-name/{resourceName}.git" }
                     }
                 };
                 
