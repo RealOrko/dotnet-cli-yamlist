@@ -7,6 +7,6 @@ params:
   HELLO_WORLD:
 
 run:
-  path: /bin/bash
+  path: bash
   args:
     - "dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.sh"

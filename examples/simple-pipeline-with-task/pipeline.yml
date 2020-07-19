@@ -1,21 +1,21 @@
+
 jobs:
-  - name: my-simple-job
-    public: true
-    plan:
-      - get: ubuntu-image
-      - get: dotnet-cli-yamilst
-      - task: my-simple-task
-        file: dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.yml
-        image: ubuntu-image
-        params: 
-          HELLO_WORLD: Hello world!
+
+- name: my-simple-job
+  plan:
+  - get: ubuntu-image
+  - get: dotnet-cli-yamilst
+  - task: my-simple-task
+    file: dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.yml
+    image: ubuntu-image
+    params:
+      HELLO_WORLD: Hello world!
 
 resources:
 
 - name: dotnet-cli-yamilst
   type: git
   source:
-    ignore_paths: []
     branch: master
     uri: https://github.com/RealOrko/dotnet-cli-yamlist.git
 
@@ -23,3 +23,4 @@ resources:
   type: registry-image
   source:
     repository: docker.io/ubuntu
+
