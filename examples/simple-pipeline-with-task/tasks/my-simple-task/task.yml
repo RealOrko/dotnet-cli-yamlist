@@ -9,4 +9,4 @@ params:
 run:
   path: bash
   args:
-    - "dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.sh"
+    - "examples/simple-pipeline-with-task/tasks/my-simple-task/task.sh"

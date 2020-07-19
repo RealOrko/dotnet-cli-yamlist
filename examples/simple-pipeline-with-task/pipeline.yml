@@ -5,13 +5,9 @@ jobs:
   plan:
   - get: ubuntu-image
   - get: dotnet-cli-yamilst
-  - task: my-simple-task
-    file: dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.yml
+  - task: my-simple-task-with-script
+    file: examples/simple-pipeline-with-task/tasks/my-simple-task/task.yml
     image: ubuntu-image
-    inputs: 
-      - name: dotnet-cli-yamilst
-        path: dotnet-cli-yamilst
-        optional: false
     params:
       HELLO_WORLD: Hello world!
 
