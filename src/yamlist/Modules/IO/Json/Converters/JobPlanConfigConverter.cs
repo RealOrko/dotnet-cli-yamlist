@@ -34,6 +34,12 @@ namespace yamlist.Modules.IO.Json.Converters
                     writer.WriteValue(jpc.Platform);
                 }
 
+                if (jpc.ImageResource != null)
+                {
+                    writer.WritePropertyName("image_resource");
+                    serializer.Serialize(writer, jpc.ImageResource, typeof(JobPlanConfigImageResource));
+                }
+
                 if (jpc.Inputs != null && jpc.Inputs.Count > 0)
                 {
                     writer.WritePropertyName("inputs");
@@ -114,6 +120,11 @@ namespace yamlist.Modules.IO.Json.Converters
                 {
                     jobPlanConfig.Params = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(property.Value?.ToString());
                     continue;
+                }
+
+                if (property.Name == "image_resource")
+                {
+                    jobPlanConfig.ImageResource = JsonConvert.DeserializeObject<JobPlanConfigImageResource>(property.Value?.ToString());
                 }
                 
                 if (property.Name.StartsWith("params_anchor_decl_"))
