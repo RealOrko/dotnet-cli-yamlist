@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -23,16 +24,21 @@ namespace yamlist.Modules.IO.Json.Converters
             {
                 writer.WriteStartObject();
 
-                if (!string.IsNullOrEmpty(resourceTypeSource.Repository))
+                foreach (var kv in resourceTypeSource)
                 {
-                    writer.WritePropertyName("repository");
-                    writer.WriteValue(resourceTypeSource.Repository);
+                    writer.WritePropertyName(kv.Key);
+                    serializer.Serialize(writer, kv.Value);
                 }
                 
-                if (!string.IsNullOrEmpty(resourceTypeSource.Tag))
+                if (resourceTypeSource.Insecure_Registries != null && resourceTypeSource.Insecure_Registries.Count > 0)
                 {
-                    writer.WritePropertyName("tag");
-                    writer.WriteValue(resourceTypeSource.Tag);
+                    writer.WritePropertyName("insecure_registries");
+                    writer.WriteStartArray();
+                    foreach (var ignorePath in resourceTypeSource.Insecure_Registries)
+                    {
+                        writer.WriteValue(ignorePath);
+                    }
+                    writer.WriteEndArray();
                 }
                 
                 writer.WriteEndObject();
@@ -47,19 +53,15 @@ namespace yamlist.Modules.IO.Json.Converters
 
             foreach (var property in jObject.Properties())
             {
-                if (property.Name == "repository")
+                if (property.Name == "insecure_registries")
                 {
-                    resourceTypeSource.Repository = property.Value?.ToString();
+                    resourceTypeSource.Insecure_Registries = JsonConvert.DeserializeObject<List<string>>(property.Value?.ToString());
                     continue;
                 }
-                
-                if (property.Name == "tag")
-                {
-                    resourceTypeSource.Tag = property.Value?.ToString();
-                    continue;
-                }
-            }
 
+                resourceTypeSource.Add(property.Name, property.Value);
+            }
+            
             return resourceTypeSource;
         }
 

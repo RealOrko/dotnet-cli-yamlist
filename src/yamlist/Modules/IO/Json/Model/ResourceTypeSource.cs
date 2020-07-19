@@ -1,13 +1,11 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace yamlist.Modules.IO.Json.Model
 {
-    public class ResourceTypeSource
+    public class ResourceTypeSource : Dictionary<string, dynamic>
     {
-        [JsonProperty("repository")]
-        public string Repository { get; set; }
-        
-        [JsonProperty("tag")]
-        public string Tag { get; set; }
+        [JsonProperty("insecure_registries")]
+        public List<string> Insecure_Registries { get; set; }
     }
 }
