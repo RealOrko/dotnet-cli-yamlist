@@ -5,4 +5,4 @@
 # Please run 'docker-compose up -d' from a fresh clone of https://github.com/RealOrko/concourse-docker first.
 
 fly --target local-dev login -n main -c http://localhost:8080/ -u test -p test
-fly -t local-dev intercept -j job-with-task/my-simple-job-with-task
+fly -t local-dev intercept -j simple-job-with-task/my-simple-job-with-task
