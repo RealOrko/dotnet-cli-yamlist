@@ -9,19 +9,23 @@ using yamlist.Modules.IO.Json.Model;
 
 namespace yamlist.Commands
 {
-    [Binds(typeof(AddTaskArguments))]
-    public class AddTaskCommand
+    [Binds(typeof(AddJobArguments))]
+    public class AddJobCommand
     {
-        public AddTaskCommand(Context context)
+        public AddJobCommand(Context context)
         {
             Context = context;
         }
 
         public Context Context { get; }
 
-        public int Execute(AddTaskArguments args)
+        public int Execute(AddJobArguments args)
         {
             var pipeline = FindOrCreatePipeline(args.InputFile, args.Debug);
+            var jobCount = FindExistingJobCount(pipeline, args.JobName);
+            args.JobName = $"{args.JobName}-{jobCount}";
+            args.TaskName = $"{args.TaskName}-{jobCount}";
+            
             FindOrCreateJob(pipeline, args.JobName, args.TaskName, args.TasksFolder);
             FindOrCreateGitResource(pipeline);
             FindOrCreateUbuntuResource(pipeline);
@@ -86,44 +90,54 @@ echo $HELLO_WORLD
             return newOrExistingPipeline;
         }
 
+        private int FindExistingJobCount(Pipeline pipeline, string jobName)
+        {
+            var existingJobCount = pipeline.Jobs.Count(x => x.Name.StartsWith(jobName));
+            return existingJobCount;
+        }
+
         private void FindOrCreateJob(Pipeline pipeline, string jobName, string taskName, string taskFolder)
         {
             var newOrExistingjob = pipeline.Jobs.FirstOrDefault(x => x.Name == jobName);
-            if (newOrExistingjob == null)
+
+            if (newOrExistingjob != null)
             {
-                var newJob = new Job()
+                var existingJobCount = pipeline.Jobs.Count(x => x.Name.StartsWith(jobName));
+                jobName = $"{jobName}_{existingJobCount}";
+            }
+
+            var newJob = new Job()
+            {
+                Name = jobName,
+                Plan = new List<JobPlan>()
                 {
-                    Name = jobName,
-                    Plan = new List<JobPlan>()
+                    new JobPlan()
                     {
-                        new JobPlan()
+                        Get = "ubuntu-image"
+                    },
+                    new JobPlan()
+                    {
+                        Get = "my-source-git"
+                    },
+                    new JobPlan()
+                    {
+                        Task = taskName,
+                        File = Path.Combine("my-source-git", taskFolder, taskName, $"{taskName}.yml"),
+                        Image = "ubuntu-image",
+                        Params = new Dictionary<string, dynamic>()
                         {
-                            Get = "ubuntu-image"
-                        },
-                        new JobPlan()
-                        {
-                            Get = "my-source-git"
-                        },
-                        new JobPlan()
-                        {
-                            Task = taskName,
-                            File = Path.Combine(taskFolder, $"{taskName}.yml"),
-                            Image = "ubuntu-image",
-                            Params = new Dictionary<string, dynamic>()
-                            {
-                                { "HELLO_WORLD", "Hello world!" }
-                            }
+                            {"HELLO_WORLD", "Hello world!"}
                         }
                     }
-                };
+                }
+            };
 
-                pipeline.Jobs.Add(newJob);
-            }
+            pipeline.Jobs.Add(newJob);
         }
 
         private void FindOrCreateGitResource(Pipeline pipeline)
         {
-            var newOrExistingGitResource = pipeline.Resources.FirstOrDefault(x => x.Name == "dotnet-cli-yamilst");
+            var newOrExistingGitResource = pipeline.Resources.FirstOrDefault(x => x.Name == "my-source-git");
             if (newOrExistingGitResource == null)
             {
                 var newResource = new Resource()
