@@ -8,6 +8,8 @@ jobs:
   - task: my-simple-task
     file: dotnet-cli-yamilst/examples/simple-pipeline-with-task/tasks/task.yml
     image: ubuntu-image
+    inputs: 
+      - name: dotnet-cli-yamilst
     params:
       HELLO_WORLD: Hello world!
 
